@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.tugas.perpus.controller.CategoryController" %>
+<%@ page import="com.tugas.perpus.model.Category" %>
 <%
   // Inisialisasi controller
   CategoryController categoryController = (CategoryController) session.getAttribute("categoryController");
@@ -8,14 +9,8 @@
     session.setAttribute("categoryController", categoryController);
   }
 
-  // Tangani input dari form
-  String newCategory = request.getParameter("categoryName");
-  if (newCategory != null) {
-    categoryController.addCategory(newCategory);
-  }
-
-  // Ambil daftar kategori
-  java.util.List<String> categories = categoryController.getCategories();
+  // Ambil daftar kategori dari database
+  java.util.List<Category> categories = categoryController.getCategoriesFromDatabase();
 %>
 <!DOCTYPE html>
 <html>
@@ -24,17 +19,21 @@
 </head>
 <body>
   <h1>Daftar Kategori</h1>
-  <ul>
-    <% for (String category : categories) { %>
-      <li><%= category %></li>
-    <% } %>
-  </ul>
-
-  <h2>Tambah Kategori</h2>
-  <form method="post" action="index.jsp">
-    <label for="categoryName">Nama Kategori:</label>
-    <input type="text" id="categoryName" name="categoryName" required>
-    <button type="submit">Tambah</button>
-  </form>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nama Kategori</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for (Category category : categories) { %>
+        <tr>
+          <td><%= category.getId() %></td>
+          <td><%= category.getName() %></td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
 </body>
 </html>

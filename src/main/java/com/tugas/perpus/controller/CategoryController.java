@@ -4,6 +4,13 @@
  */
 package com.tugas.perpus.controller;
 
+import com.tugas.perpus.util.DatabaseConnection;
+import com.tugas.perpus.model.Category;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,19 +19,25 @@ import java.util.List;
  * @author LENOVO
  */
 public class CategoryController {
-  private List<String> categories;
+  public List<Category> getCategoriesFromDatabase() {
+    List<Category> categories = new ArrayList<>();
+    Connection connection = DatabaseConnection.getConnection();
 
-  public CategoryController() {
-    categories = new ArrayList<>();
-  }
+    if (connection != null) {
+      String query = "SELECT id, name FROM categories";
+      try (PreparedStatement statement = connection.prepareStatement(query);
+           ResultSet resultSet = statement.executeQuery()) {
 
-  public void addCategory(String categoryName) {
-    if (categoryName != null && !categoryName.trim().isEmpty()) {
-      categories.add(categoryName);
+        while (resultSet.next()) {
+          int id = resultSet.getInt("id");
+          String name = resultSet.getString("name");
+          categories.add(new Category(id, name));
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
     }
-  }
 
-  public List<String> getCategories() {
     return categories;
   }
 }

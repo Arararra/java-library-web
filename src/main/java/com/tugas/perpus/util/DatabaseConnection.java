@@ -14,7 +14,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnection {
-  private static final String URL = "jdbc:mysql://localhost:8888/database_name";
+  private static final String URL = "jdbc:mysql://localhost:3306/java_library";
   private static final String USER = "root";
   private static final String PASSWORD = "";
 
@@ -41,8 +41,21 @@ public class DatabaseConnection {
         connection = null;
         System.out.println("Database connection closed.");
       } catch (SQLException e) {
+        System.out.println("Error Message: " + e.getMessage());
         e.printStackTrace();
       }
     }
+  }
+
+  public static void main(String[] args) {
+    Connection connection = getConnection();
+
+    if (connection != null) {
+      System.out.println("Koneksi ke database berhasil!");
+    } else {
+      System.out.println("Koneksi ke database gagal!");
+    }
+
+    closeConnection();
   }
 }

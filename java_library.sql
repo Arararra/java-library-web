@@ -5,20 +5,21 @@ CREATE TABLE users (
     email VARCHAR(100),
     phone VARCHAR(20),
     address TEXT,
+    password VARCHAR(255),
     role VARCHAR(20) CHECK (role IN ('admin', 'member'))
 );
 
-INSERT INTO users (id, name, email, phone, address, role) VALUES
-(1, 'Admin One', 'admin1@lib.com', '0800000001', 'Jl. Merdeka 1', 'admin'),
-(2, 'Admin Two', 'admin2@lib.com', '0800000002', 'Jl. Merdeka 2', 'admin'),
-(3, 'Member One', 'member1@lib.com', '0811000001', 'Jl. Mawar 1', 'member'),
-(4, 'Member Two', 'member2@lib.com', '0811000002', 'Jl. Mawar 2', 'member'),
-(5, 'Member Three', 'member3@lib.com', '0811000003', 'Jl. Mawar 3', 'member'),
-(6, 'Member Four', 'member4@lib.com', '0811000004', 'Jl. Mawar 4', 'member'),
-(7, 'Member Five', 'member5@lib.com', '0811000005', 'Jl. Mawar 5', 'member'),
-(8, 'Member Six', 'member6@lib.com', '0811000006', 'Jl. Mawar 6', 'member'),
-(9, 'Member Seven', 'member7@lib.com', '0811000007', 'Jl. Mawar 7', 'member'),
-(10, 'Member Eight', 'member8@lib.com', '0811000008', 'Jl. Mawar 8', 'member');
+INSERT INTO users (id, name, email, phone, address, password, role) VALUES
+(1, 'Admin One', 'admin1@lib.com', '0800000001', 'Jl. Merdeka 1', '$2a$10$EAGnwC/cJ/WdW4JKz83CNu/13tN7SaepIfG8io3Rq9zJjFIFu3qo2', 'admin'),
+(2, 'Admin Two', 'admin2@lib.com', '0800000002', 'Jl. Merdeka 2', '$2a$10$eRzGGNnGk7KA.ro6cqyIteXdC1HXPzz5m0fvpTv0m5OWWb8qwA6AK', 'admin'),
+(3, 'Member One', 'member1@lib.com', '0811000001', 'Jl. Mawar 1', '$2a$10$fNoR/TyOxHLrD478HjmMIe4e6oPETcxN9OCdOM6C2SMfzK4Kx/CAK', 'member'),
+(4, 'Member Two', 'member2@lib.com', '0811000002', 'Jl. Mawar 2', '$2a$10$EAGnwC/cJ/WdW4JKz83CNu/13tN7SaepIfG8io3Rq9zJjFIFu3qo2', 'member'),
+(5, 'Member Three', 'member3@lib.com', '0811000003', 'Jl. Mawar 3', '$2a$10$eRzGGNnGk7KA.ro6cqyIteXdC1HXPzz5m0fvpTv0m5OWWb8qwA6AK', 'member'),
+(6, 'Member Four', 'member4@lib.com', '0811000004', 'Jl. Mawar 4', '$2a$10$fNoR/TyOxHLrD478HjmMIe4e6oPETcxN9OCdOM6C2SMfzK4Kx/CAK', 'member'),
+(7, 'Member Five', 'member5@lib.com', '0811000005', 'Jl. Mawar 5', '$2a$10$EAGnwC/cJ/WdW4JKz83CNu/13tN7SaepIfG8io3Rq9zJjFIFu3qo2', 'member'),
+(8, 'Member Six', 'member6@lib.com', '0811000006', 'Jl. Mawar 6', '$2a$10$eRzGGNnGk7KA.ro6cqyIteXdC1HXPzz5m0fvpTv0m5OWWb8qwA6AK', 'member'),
+(9, 'Member Seven', 'member7@lib.com', '0811000007', 'Jl. Mawar 7', '$2a$10$fNoR/TyOxHLrD478HjmMIe4e6oPETcxN9OCdOM6C2SMfzK4Kx/CAK', 'member'),
+(10, 'Member Eight', 'member8@lib.com', '0811000008', 'Jl. Mawar 8', '$2a$10$EAGnwC/cJ/WdW4JKz83CNu/13tN7SaepIfG8io3Rq9zJjFIFu3qo2', 'member');
 
 -- Tabel categories
 CREATE TABLE categories (

@@ -4,6 +4,8 @@
  */
 package com.tugas.perpus.model;
 
+import com.tugas.perpus.util.PasswordHelper;
+
 /**
  *
  * @author LENOVO
@@ -14,6 +16,7 @@ public class User {
   private String email;
   private String phone;
   private String address;
+  private String password;
   protected String role;
 
   public User(int id, String name, String email, String phone, String address, String role) {
@@ -55,6 +58,13 @@ public class User {
   }
   public void setAddress(String address) {
     this.address = address;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+  public void setPassword(String password) {
+    this.password = PasswordHelper.hashPassword(password);
   }
 
   public String getRole() {

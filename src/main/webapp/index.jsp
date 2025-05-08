@@ -7,15 +7,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <jsp:include page="_layouts/head.jsp" />
+  <jsp:include page="/_layouts/head.jsp" />
 </head>
 <body id="page-top">
   <div id="wrapper">
-    <jsp:include page="_components/sidebar.jsp" />
+    <jsp:include page="/_components/sidebar.jsp" />
 
     <div id="content-wrapper" class="d-flex flex-column">
       <div id="content">
-        <jsp:include page="_components/navbar.jsp" />
+        <jsp:include page="/_components/navbar.jsp" />
 
         <div class="container-fluid">
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -169,7 +169,7 @@
         </div>
       </div>
 
-      <jsp:include page="_components/footer.jsp" />
+      <jsp:include page="/_components/footer.jsp" />
     </div>
   </div>
 
@@ -177,8 +177,8 @@
     <i class="fas fa-angle-up"></i>
   </a>
 
-  <jsp:include page="_layouts/script.jsp" />
-  <!-- Page level custom scripts -->
+  <jsp:include page="/_layouts/script.jsp" />
+  <script src="<%= request.getContextPath() %>/_themes/vendor/chart.js/Chart.min.js"></script>
   <script src="<%= request.getContextPath() %>/_themes/js/demo/chart-area-demo.js"></script>
   <script src="<%= request.getContextPath() %>/_themes/js/demo/chart-pie-demo.js"></script>
 </body>

@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <jsp:include page="_layouts/head.jsp" />
+  <jsp:include page="/_layouts/head.jsp" />
 </head>
 <body class="bg-gradient-primary">
   <div class="container">
@@ -45,6 +45,6 @@
     </div>
   </div>
 
-  <jsp:include page="_layouts/script.jsp" />
+  <jsp:include page="/_layouts/script.jsp" />
 </body>
 </html>

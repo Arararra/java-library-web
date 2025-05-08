@@ -40,14 +40,26 @@
   </li>
   <li class="nav-item">
     <a class="nav-link" href="charts.html">
-      <i class="fas fa-fw fa-chart-area"></i>
-      <span>Charts</span>
+      <i class="fas fa-fw fa-boxes"></i>
+      <span>Peminjaman</span>
     </a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="tables.html">
-      <i class="fas fa-fw fa-table"></i>
-      <span>Tables</span>
+      <i class="fas fa-fw fa-book"></i>
+      <span>Buku</span>
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="tables.html">
+      <i class="fas fa-fw fa-th-large"></i>
+      <span>Kategori</span>
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="tables.html">
+      <i class="fas fa-fw fa-users"></i>
+      <span>Member</span>
     </a>
   </li>
 

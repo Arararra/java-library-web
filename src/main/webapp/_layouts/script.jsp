@@ -9,6 +9,3 @@
 
 <!-- Custom scripts for all pages-->
 <script src="<%= request.getContextPath() %>/_themes/js/sb-admin-2.min.js"></script>
-
-<!-- Page level plugins -->
-<script src="<%= request.getContextPath() %>/_themes/vendor/chart.js/Chart.min.js"></script>

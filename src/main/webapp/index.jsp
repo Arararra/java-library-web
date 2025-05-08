@@ -1,39 +1,47 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.tugas.perpus.controller.CategoryController" %>
 <%@ page import="com.tugas.perpus.model.Category" %>
+
 <%
-  // Inisialisasi controller
+  request.setAttribute("title", "Ini Index");
+
   CategoryController categoryController = (CategoryController) session.getAttribute("categoryController");
   if (categoryController == null) {
     categoryController = new CategoryController();
     session.setAttribute("categoryController", categoryController);
   }
 
-  // Ambil daftar kategori dari database
   java.util.List<Category> categories = categoryController.getCategoriesFromDatabase();
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Perpustakaan</title>
+  <jsp:include page="_layouts/head.jsp" />
 </head>
 <body>
-  <h1>Daftar Kategori</h1>
-  <table border="1">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nama Kategori</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% for (Category category : categories) { %>
+  <jsp:include page="_layouts/navbar.jsp" />
+
+  <main class="container mt-4">
+    <h1>Daftar Kategori</h1>
+    <table class="table table-striped">
+      <thead class="thead-dark">
         <tr>
-          <td><%= category.getId() %></td>
-          <td><%= category.getName() %></td>
+          <th scope="col">ID</th>
+          <th scope="col">Nama Kategori</th>
         </tr>
-      <% } %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% for (Category category : categories) { %>
+          <tr>
+            <td><%= category.getId() %></td>
+            <td><%= category.getName() %></td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </main>
+
+  <jsp:include page="_layouts/foot.jsp" />
 </body>
 </html>

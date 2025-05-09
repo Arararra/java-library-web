@@ -45,13 +45,13 @@
     </a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="tables.html">
+    <a class="nav-link" href="<%= request.getContextPath() %>/book/index.jsp">
       <i class="fas fa-fw fa-book"></i>
       <span>Buku</span>
     </a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="tables.html">
+    <a class="nav-link" href="<%= request.getContextPath() %>/category/index.jsp">
       <i class="fas fa-fw fa-th-large"></i>
       <span>Kategori</span>
     </a>

@@ -28,7 +28,7 @@ import="com.tugas.perpus.model.Category" %> <% request.setAttribute("title",
                 class="form-box"
                 style="
                   width: 100%;
-                  height: 100%;
+                  height: 100vh;
                   background-color: #ffffff;
                   border-radius: 10px;
                   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
@@ -37,21 +37,23 @@ import="com.tugas.perpus.model.Category" %> <% request.setAttribute("title",
                   margin-top: 20px;
                 "
               >
-                <form action="/kategori/tambah" method="POST">
+                <form action="/buku/tambah" method="POST">
+                  <!-- Judul -->
                   <div style="margin-bottom: 20px">
                     <label
-                      for="namaKategori"
+                      for="judul"
                       style="
                         display: block;
                         font-weight: bold;
                         margin-bottom: 8px;
                       "
-                      >Nama Kategori:</label
                     >
+                      Judul Buku:
+                    </label>
                     <input
                       type="text"
-                      id="namaKategori"
-                      name="namaKategori"
+                      id="judul"
+                      name="judul"
                       required
                       style="
                         padding: 10px;
@@ -62,6 +64,112 @@ import="com.tugas.perpus.model.Category" %> <% request.setAttribute("title",
                     />
                   </div>
 
+                  <!-- Kategori -->
+                  <div style="margin-bottom: 20px">
+                    <label
+                      for="kategori"
+                      style="
+                        display: block;
+                        font-weight: bold;
+                        margin-bottom: 8px;
+                      "
+                    >
+                      Kategori:
+                    </label>
+                    <input
+                      type="text"
+                      id="kategori"
+                      name="kategori"
+                      required
+                      style="
+                        padding: 10px;
+                        width: 100%;
+                        border: 1px solid #ccc;
+                        border-radius: 4px;
+                      "
+                    />
+                  </div>
+
+                  <!-- Stok -->
+                  <div style="margin-bottom: 20px">
+                    <label
+                      for="stok"
+                      style="
+                        display: block;
+                        font-weight: bold;
+                        margin-bottom: 8px;
+                      "
+                    >
+                      Stok:
+                    </label>
+                    <input
+                      type="number"
+                      id="stok"
+                      name="stok"
+                      required
+                      min="0"
+                      style="
+                        padding: 10px;
+                        width: 100%;
+                        border: 1px solid #ccc;
+                        border-radius: 4px;
+                      "
+                    />
+                  </div>
+
+                  <!-- Penulis -->
+                  <div style="margin-bottom: 20px">
+                    <label
+                      for="penulis"
+                      style="
+                        display: block;
+                        font-weight: bold;
+                        margin-bottom: 8px;
+                      "
+                    >
+                      Penulis:
+                    </label>
+                    <input
+                      type="text"
+                      id="penulis"
+                      name="penulis"
+                      required
+                      style="
+                        padding: 10px;
+                        width: 100%;
+                        border: 1px solid #ccc;
+                        border-radius: 4px;
+                      "
+                    />
+                  </div>
+
+                  <!-- Penerbit -->
+                  <div style="margin-bottom: 20px">
+                    <label
+                      for="penerbit"
+                      style="
+                        display: block;
+                        font-weight: bold;
+                        margin-bottom: 8px;
+                      "
+                    >
+                      Penerbit:
+                    </label>
+                    <input
+                      type="text"
+                      id="penerbit"
+                      name="penerbit"
+                      required
+                      style="
+                        padding: 10px;
+                        width: 100%;
+                        border: 1px solid #ccc;
+                        border-radius: 4px;
+                      "
+                    />
+                  </div>
+
+                  <!-- Submit -->
                   <div style="text-align: right">
                     <button
                       type="submit"

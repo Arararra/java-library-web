@@ -22,7 +22,7 @@ import="com.tugas.perpus.model.Category" %> <% request.setAttribute("title",
 
           <div class="container-fluid">
             <div style="margin: 40px">
-              <h1 class="h3 mb-2 text-gray-800">Tambah Kategori</h1>
+              <h1 class="h3 mb-2 text-gray-800">Edit Kategori</h1>
 
               <div
                 class="form-box"
@@ -73,7 +73,7 @@ import="com.tugas.perpus.model.Category" %> <% request.setAttribute("title",
                         border-radius: 4px;
                       "
                     >
-                      Submit
+                      Edit
                     </button>
                   </div>
                 </form>

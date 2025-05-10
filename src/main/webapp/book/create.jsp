@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %> <%@ page
 import="com.tugas.perpus.controller.CategoryController" %> <%@ page
 import="com.tugas.perpus.model.Category" %> <% request.setAttribute("title",
-"Create-Category"); %>
+"Create-Book"); %>
 
 <!DOCTYPE html>
 <html>

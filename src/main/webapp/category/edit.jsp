@@ -26,8 +26,8 @@
               <div class="card-body justify-content-end">
                 <form method="POST" action="/category/controller/create" class="d-flex flex-column align-items-end">
                   <div class="form-group w-100">
-                    <label for="name">Nama</label>
-                    <input type="text" class="form-control" id="name" placeholder="Masukkan Nama" name="name" value="Teknologi" />
+                    <label for="name" class="font-weight-bold">Nama</label>
+                    <input type="text" class="form-control" id="name" placeholder="Masukkan Nama" name="name" value="Teknologi" required />
                   </div>
                   <button type="submit" class="btn btn-primary">Submit</button>
                 </form>

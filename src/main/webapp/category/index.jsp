@@ -3,7 +3,7 @@
 <%@ page import="com.tugas.perpus.model.Category" %>
 
 <%
-  request.setAttribute("title", "Category");
+  request.setAttribute("title", "Kategori");
 
   CategoryController categoryController = (CategoryController) session.getAttribute("categoryController");
   if (categoryController == null) {

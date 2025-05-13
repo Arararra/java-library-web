@@ -1,16 +1,15 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %> <%@ page
-import="com.tugas.perpus.controller.CategoryController" %> <%@ page
-import="com.tugas.perpus.model.Category" %> <% request.setAttribute("title",
-"Create-Category"); %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.tugas.perpus.controller.CategoryController" %>
+<%@ page import="com.tugas.perpus.model.Category" %>
+
+<%
+  request.setAttribute("title", "Buat Kategori");
+%>
 
 <!DOCTYPE html>
 <html>
   <head>
     <jsp:include page="/_layouts/head.jsp" />
-    <link
-      href="<%= request.getContextPath() %>/_themes/vendor/datatables/dataTables.bootstrap4.min.css"
-      rel="stylesheet"
-    />
   </head>
   <body id="page-top">
     <div id="wrapper">
@@ -21,33 +20,17 @@ import="com.tugas.perpus.model.Category" %> <% request.setAttribute("title",
           <jsp:include page="/_components/navbar.jsp" />
 
           <div class="container-fluid">
-            <div class="my-5">
-              <h1 class="h3 mb-4 text-gray-800">Tambah Kategori</h1>
+            <h1 class="h3 mb-2 text-gray-800">Buat Kategori</h1>
 
-              <div class="card shadow mb-4">
-                <div class="card-body">
-                  <form action="/kategori/tambah" method="POST">
-                    <div class="form-group">
-                      <label for="namaKategori" class="font-weight-bold"
-                        >Nama Kategori</label
-                      >
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="namaKategori"
-                        name="namaKategori"
-                        required
-                        placeholder="Masukkan nama kategori"
-                      />
-                    </div>
-
-                    <div class="text-right">
-                      <button type="submit" class="btn btn-success px-4">
-                        Submit
-                      </button>
-                    </div>
-                  </form>
-                </div>
+            <div class="card shadow mb-4">
+              <div class="card-body justify-content-end">
+                <form method="POST" action="/category/controller/create" class="d-flex flex-column align-items-end">
+                  <div class="form-group w-100">
+                    <label for="name">Nama</label>
+                    <input type="text" class="form-control" id="name" placeholder="Masukkan Nama" name="name" />
+                  </div>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
               </div>
             </div>
           </div>
@@ -62,12 +45,5 @@ import="com.tugas.perpus.model.Category" %> <% request.setAttribute("title",
     </a>
 
     <jsp:include page="/_layouts/script.jsp" />
-    <script src="<%= request.getContextPath() %>/_themes/vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="<%= request.getContextPath() %>/_themes/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-    <script>
-      $(document).ready(function () {
-        $("#dataTable").DataTable();
-      });
-    </script>
   </body>
 </html>

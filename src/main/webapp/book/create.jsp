@@ -21,170 +21,95 @@ import="com.tugas.perpus.model.Category" %> <% request.setAttribute("title",
           <jsp:include page="/_components/navbar.jsp" />
 
           <div class="container-fluid">
-            <div style="margin: 40px">
-              <h1 class="h3 mb-2 text-gray-800">Tambahkan Buku</h1>
+            <div class="my-4">
+              <h1 class="h3 mb-4 text-gray-800">Tambahkan Buku</h1>
 
-              <div
-                class="form-box"
-                style="
-                  width: 100%;
-                  height: 100vh;
-                  background-color: #ffffff;
-                  border-radius: 10px;
-                  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-                  padding: 30px;
-                  box-sizing: border-box;
-                  margin-top: 20px;
-                "
-              >
-                <form action="/buku/tambah" method="POST">
-                  <!-- Judul -->
-                  <div style="margin-bottom: 20px">
-                    <label
-                      for="judul"
-                      style="
-                        display: block;
-                        font-weight: bold;
-                        margin-bottom: 8px;
-                      "
-                    >
-                      Judul Buku:
-                    </label>
-                    <input
-                      type="text"
-                      id="judul"
-                      name="judul"
-                      required
-                      style="
-                        padding: 10px;
-                        width: 100%;
-                        border: 1px solid #ccc;
-                        border-radius: 4px;
-                      "
-                    />
-                  </div>
+              <div class="card shadow mb-4">
+                <div class="card-body">
+                  <form action="/buku/tambah" method="POST">
+                    <!-- Judul -->
+                    <div class="form-group">
+                      <label for="judul" class="font-weight-bold"
+                        >Judul Buku</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="judul"
+                        name="judul"
+                        required
+                        placeholder="Masukkan judul buku"
+                      />
+                    </div>
 
-                  <!-- Kategori -->
-                  <div style="margin-bottom: 20px">
-                    <label
-                      for="kategori"
-                      style="
-                        display: block;
-                        font-weight: bold;
-                        margin-bottom: 8px;
-                      "
-                    >
-                      Kategori:
-                    </label>
-                    <input
-                      type="text"
-                      id="kategori"
-                      name="kategori"
-                      required
-                      style="
-                        padding: 10px;
-                        width: 100%;
-                        border: 1px solid #ccc;
-                        border-radius: 4px;
-                      "
-                    />
-                  </div>
+                    <!-- Kategori -->
+                    <div class="form-group">
+                      <label for="kategori" class="font-weight-bold"
+                        >Kategori</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="kategori"
+                        name="kategori"
+                        required
+                        placeholder="Masukkan kategori buku"
+                      />
+                    </div>
 
-                  <!-- Stok -->
-                  <div style="margin-bottom: 20px">
-                    <label
-                      for="stok"
-                      style="
-                        display: block;
-                        font-weight: bold;
-                        margin-bottom: 8px;
-                      "
-                    >
-                      Stok:
-                    </label>
-                    <input
-                      type="number"
-                      id="stok"
-                      name="stok"
-                      required
-                      min="0"
-                      style="
-                        padding: 10px;
-                        width: 100%;
-                        border: 1px solid #ccc;
-                        border-radius: 4px;
-                      "
-                    />
-                  </div>
+                    <!-- Stok -->
+                    <div class="form-group">
+                      <label for="stok" class="font-weight-bold">Stok</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="stok"
+                        name="stok"
+                        required
+                        min="0"
+                        placeholder="Masukkan jumlah stok"
+                      />
+                    </div>
 
-                  <!-- Penulis -->
-                  <div style="margin-bottom: 20px">
-                    <label
-                      for="penulis"
-                      style="
-                        display: block;
-                        font-weight: bold;
-                        margin-bottom: 8px;
-                      "
-                    >
-                      Penulis:
-                    </label>
-                    <input
-                      type="text"
-                      id="penulis"
-                      name="penulis"
-                      required
-                      style="
-                        padding: 10px;
-                        width: 100%;
-                        border: 1px solid #ccc;
-                        border-radius: 4px;
-                      "
-                    />
-                  </div>
+                    <!-- Penulis & Penerbit berdampingan -->
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label for="penulis" class="font-weight-bold"
+                          >Penulis</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="penulis"
+                          name="penulis"
+                          required
+                          placeholder="Masukkan nama penulis"
+                        />
+                      </div>
 
-                  <!-- Penerbit -->
-                  <div style="margin-bottom: 20px">
-                    <label
-                      for="penerbit"
-                      style="
-                        display: block;
-                        font-weight: bold;
-                        margin-bottom: 8px;
-                      "
-                    >
-                      Penerbit:
-                    </label>
-                    <input
-                      type="text"
-                      id="penerbit"
-                      name="penerbit"
-                      required
-                      style="
-                        padding: 10px;
-                        width: 100%;
-                        border: 1px solid #ccc;
-                        border-radius: 4px;
-                      "
-                    />
-                  </div>
+                      <div class="form-group col-md-6">
+                        <label for="penerbit" class="font-weight-bold"
+                          >Penerbit</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="penerbit"
+                          name="penerbit"
+                          required
+                          placeholder="Masukkan nama penerbit"
+                        />
+                      </div>
+                    </div>
 
-                  <!-- Submit -->
-                  <div style="text-align: right">
-                    <button
-                      type="submit"
-                      style="
-                        padding: 10px 20px;
-                        background-color: #4caf50;
-                        color: white;
-                        border: none;
-                        border-radius: 4px;
-                      "
-                    >
-                      Submit
-                    </button>
-                  </div>
-                </form>
+                    <!-- Submit -->
+                    <div class="text-right">
+                      <button type="submit" class="btn btn-success px-4">
+                        Submit
+                      </button>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
           </div>

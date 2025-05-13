@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %> <%@ page
 import="com.tugas.perpus.controller.CategoryController" %> <%@ page
 import="com.tugas.perpus.model.Category" %> <% request.setAttribute("title",
-"Create-Category"); %>
+"Edit-Category"); %>
 
 <!DOCTYPE html>
 <html>
@@ -21,62 +21,42 @@ import="com.tugas.perpus.model.Category" %> <% request.setAttribute("title",
           <jsp:include page="/_components/navbar.jsp" />
 
           <div class="container-fluid">
-            <div style="margin: 40px">
-              <h1 class="h3 mb-2 text-gray-800">Edit Kategori</h1>
+            <div class="my-5">
+              <h1 class="h3 mb-4 text-gray-800">Edit Kategori</h1>
 
-              <div
-                class="form-box"
-                style="
-                  width: 100%;
-                  height: 100%;
-                  background-color: #ffffff;
-                  border-radius: 10px;
-                  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-                  padding: 30px;
-                  box-sizing: border-box;
-                  margin-top: 20px;
-                "
-              >
-                <form action="/kategori/tambah" method="POST">
-                  <div style="margin-bottom: 20px">
-                    <label
-                      for="namaKategori"
-                      style="
-                        display: block;
-                        font-weight: bold;
-                        margin-bottom: 8px;
-                      "
-                      >Nama Kategori:</label
-                    >
-                    <input
-                      type="text"
-                      id="namaKategori"
-                      name="namaKategori"
-                      required
-                      style="
-                        padding: 10px;
-                        width: 100%;
-                        border: 1px solid #ccc;
-                        border-radius: 4px;
-                      "
-                    />
-                  </div>
+              <div class="card shadow mb-4">
+                <div class="card-body">
+                  <form action="/kategori/edit" method="POST">
+                    <div class="form-group">
+                      <label for="namaKategori" class="font-weight-bold"
+                        >Nama Kategori</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="namaKategori"
+                        name="namaKategori"
+                        required
+                        placeholder="Masukkan nama kategori"
+                        value="${kategori.namaKategori}"
+                        <!--
+                        Opsional
+                        jika
+                        pakai
+                        JSTL
+                        atau
+                        EL
+                        --
+                      />
+                    </div>
 
-                  <div style="text-align: right">
-                    <button
-                      type="submit"
-                      style="
-                        padding: 10px 20px;
-                        background-color: #4caf50;
-                        color: white;
-                        border: none;
-                        border-radius: 4px;
-                      "
-                    >
-                      Edit
-                    </button>
-                  </div>
-                </form>
+                    <div class="text-right">
+                      <button type="submit" class="btn btn-success px-4">
+                        Edit
+                      </button>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
           </div>

@@ -32,7 +32,7 @@
 
             <div class="card shadow mb-4">
               <div class="card-body justify-content-end">
-                <form method="POST" action="<%= request.getContextPath() %>/controller/category/create" class="d-flex flex-column align-items-end">
+                <form method="POST" action="<%= request.getContextPath() %>/category/create" class="d-flex flex-column align-items-end">
                   <div class="form-group w-100">
                     <label for="name" class="font-weight-bold">Nama</label>
                     <input type="text" class="form-control" id="name" placeholder="Masukkan Nama" name="name" required />

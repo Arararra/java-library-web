@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "CategoryCreateServlet", urlPatterns = {"/controller/category/create"})
+@WebServlet(name = "CategoryCreateServlet", urlPatterns = {"/category/create"})
 public class CategoryCreateServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -78,4 +78,27 @@ public class CategoryController {
 
     return null;
   }
+
+  public String updateCategory(int id, String name) {
+    Connection connection = DatabaseConnection.getConnection();
+
+    if (connection != null) {
+      String query = "UPDATE categories SET name = ? WHERE id = ?";
+      try (PreparedStatement statement = connection.prepareStatement(query)) {
+        statement.setString(1, name);
+        statement.setInt(2, id);
+
+        int rowsUpdated = statement.executeUpdate();
+        if (rowsUpdated > 0) {
+          return null; // No error message, operation successful
+        } else {
+          return "Kategori dengan ID " + id + " tidak ditemukan";
+        }
+      } catch (SQLException e) {
+        return "Error saat memperbarui kategori: " + e.getMessage();
+      }
+    } else {
+      return "Koneksi ke database gagal.";
+    }
+  }
 }

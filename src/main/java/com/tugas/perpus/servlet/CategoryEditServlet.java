@@ -38,6 +38,33 @@ public class CategoryEditServlet extends HttpServlet {
 
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    System.out.println("CategoryEditServlet doPost() called");
+    String idParam = request.getPathInfo();
+    if (idParam != null && idParam.startsWith("/")) {
+      idParam = idParam.substring(1);
+    }
+
+    try {
+      int id = Integer.parseInt(idParam);
+      String name = request.getParameter("name");
+
+      if (name == null || name.trim().isEmpty()) {
+        request.getSession().setAttribute("error", "Nama kategori tidak boleh kosong");
+        response.sendRedirect(request.getContextPath() + "/category/edit/" + id);
+        return;
+      }
+
+      CategoryController categoryController = new CategoryController();
+      String errorMessage = categoryController.updateCategory(id, name);
+
+      if (errorMessage != null) {
+        request.getSession().setAttribute("error", errorMessage);
+        response.sendRedirect(request.getContextPath() + "/category/edit/" + id);
+      } else {
+        request.getSession().setAttribute("successMessage", "Kategori berhasil diperbarui");
+        response.sendRedirect(request.getContextPath() + "/category/index.jsp");
+      }
+    } catch (NumberFormatException e) {
+      response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid category ID");
+    }
   }
 }

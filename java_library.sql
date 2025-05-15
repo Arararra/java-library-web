@@ -1,6 +1,6 @@
 -- Tabel users
 CREATE TABLE users (
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100),
     email VARCHAR(100),
     phone VARCHAR(20),
@@ -23,7 +23,7 @@ INSERT INTO users (id, name, email, phone, address, password, role) VALUES
 
 -- Tabel categories
 CREATE TABLE categories (
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100)
 );
 
@@ -41,7 +41,7 @@ INSERT INTO categories (id, name) VALUES
 
 -- Tabel books
 CREATE TABLE books (
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(200),
     category_id INT,
     stock INT,
@@ -64,7 +64,7 @@ INSERT INTO books (id, title, category_id, stock, author, publisher) VALUES
 
 -- Tabel transactions
 CREATE TABLE transactions (
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT,
     book_id INT,
     borrow_date DATE,
@@ -89,7 +89,7 @@ INSERT INTO transactions (id, user_id, book_id, borrow_date, due_date, return_da
 
 -- Tabel fines
 CREATE TABLE fines (
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     transaction_id INT,
     status INT CHECK (status IN (0, 1)),
     FOREIGN KEY (transaction_id) REFERENCES transactions(id)

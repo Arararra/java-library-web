@@ -11,7 +11,7 @@ package com.tugas.perpus.model;
 import java.time.LocalDate;
 
 public class Transaction {
-  protected final int id;
+  private Integer id; // Changed from int to Integer for auto-increment compatibility
   private User user;
   private Book book;
   private LocalDate borrowDate; // Date when the book is borrowed
@@ -19,7 +19,7 @@ public class Transaction {
   private LocalDate returnDate; // Date when the book is actually returned
   private int status; // 0: borrowed, 1: returned, 2: overdue
 
-  public Transaction(int id, User user, Book book, LocalDate borrowDate, LocalDate dueDate, int status) {
+  public Transaction(Integer id, User user, Book book, LocalDate borrowDate, LocalDate dueDate, int status) {
     this.id = id;
     this.user = user;
     this.book = book;
@@ -42,8 +42,12 @@ public class Transaction {
     }
   }
 
-  public int getId() {
+  public Integer getId() {
     return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
   }
 
   public User getUser() {

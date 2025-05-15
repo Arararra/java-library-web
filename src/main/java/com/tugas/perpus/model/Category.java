@@ -9,16 +9,20 @@ package com.tugas.perpus.model;
  * @author LENOVO
  */
 public class Category {
-  private final int id;
+  private Integer id; // Changed from final int to Integer for auto-increment compatibility
   private String name;
 
-  public Category(int id, String name) {
+  public Category(Integer id, String name) {
     this.id = id;
     this.name = name;
   }
 
-  public int getId() {
+  public Integer getId() {
     return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
   }
 
   public String getName() {

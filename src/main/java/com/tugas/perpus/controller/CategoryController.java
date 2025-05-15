@@ -41,7 +41,7 @@ public class CategoryController {
     return categories;
   }
 
-  public boolean createCategory(String name) {
+  public String createCategory(String name) throws SQLException {
     Connection connection = DatabaseConnection.getConnection();
 
     if (connection != null) {
@@ -49,15 +49,12 @@ public class CategoryController {
       try (PreparedStatement stmt = connection.prepareStatement(sql)) {
         stmt.setString(1, name);
         stmt.executeUpdate();
-        return true;
+        return null; // No error message, operation successful
       } catch (SQLException e) {
-        System.err.println("Error saat menyimpan kategori: " + e.getMessage());
-        e.printStackTrace();
+        return "Error saat menyimpan kategori: " + e.getMessage();
       }
     } else {
-      System.err.println("Koneksi ke database gagal.");
+      return "Koneksi ke database gagal.";
     }
-
-    return false;
   }
 }

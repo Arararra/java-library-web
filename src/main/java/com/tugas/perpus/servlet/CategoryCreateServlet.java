@@ -28,15 +28,17 @@ public class CategoryCreateServlet extends HttpServlet {
     }
 
     CategoryController controller = new CategoryController();
-    boolean success = controller.createCategory(name);
-
-    if (success) {
-      request.getSession().setAttribute("successMessage", "Kategori berhasil ditambahkan.");
-      response.sendRedirect(request.getContextPath() + "/category/index.jsp");
-    } else {
-      // Menambahkan alasan kegagalan secara spesifik
-      String errorMessage = "Gagal menyimpan kategori. Pastikan data valid dan coba lagi.";
-      request.getSession().setAttribute("error", errorMessage);
+    try {
+      String errorMessage = controller.createCategory(name);
+      if (errorMessage == null) {
+        request.getSession().setAttribute("successMessage", "Kategori berhasil ditambahkan.");
+        response.sendRedirect(request.getContextPath() + "/category/index.jsp");
+      } else {
+        request.getSession().setAttribute("error", errorMessage);
+        response.sendRedirect(request.getContextPath() + "/category/create.jsp");
+      }
+    } catch (Exception e) {
+      request.getSession().setAttribute("error", "Terjadi kesalahan: " + e.getMessage());
       response.sendRedirect(request.getContextPath() + "/category/create.jsp");
     }
   }

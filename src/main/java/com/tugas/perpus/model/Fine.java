@@ -12,11 +12,11 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class Fine {
-  private final int id;
+  private Integer id; // Changed from int to Integer for auto-increment compatibility
   private final Transaction transaction;
   private int status; // 0: Unpaid, 1: Paid
 
-  public Fine(int id, Transaction transaction) {
+  public Fine(Integer id, Transaction transaction) {
     this.id = id;
     this.transaction = transaction;
     this.status = 0; // Default status: Unpaid
@@ -34,8 +34,12 @@ public class Fine {
     return 0.0;
   }
 
-  public int getId() {
+  public Integer getId() {
     return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
   }
 
   public Transaction getTransaction() {

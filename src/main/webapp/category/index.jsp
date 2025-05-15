@@ -3,7 +3,7 @@
 <%@ page import="com.tugas.perpus.model.Category" %>
 
 <%
-  request.setAttribute("title", "Category");
+  request.setAttribute("title", "Kategori");
 
   CategoryController categoryController = (CategoryController) session.getAttribute("categoryController");
   if (categoryController == null) {
@@ -30,6 +30,16 @@
 
         <div class="container-fluid">
           <h1 class="h3 mb-2 text-gray-800">Daftar Kategori</h1>
+          
+          <%
+            String successMessage = (String) session.getAttribute("successMessage");
+            if (successMessage != null) {
+              session.removeAttribute("successMessage");
+          %>
+            <div class="alert alert-success alert-dismissible fade show" role="alert" id="success-alert">
+              <%= successMessage %>
+            </div>
+          <% } %>
 
           <div class="card shadow mb-4">
             <div class="card-body">

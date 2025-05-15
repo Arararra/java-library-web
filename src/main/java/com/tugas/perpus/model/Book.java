@@ -9,14 +9,14 @@ package com.tugas.perpus.model;
  * @author LENOVO
  */
 public class Book {
-  private final int id;
+  private Integer id; // Changed from int to Integer for auto-increment compatibility
   private String title;
   private Category category;
   private int stock;
   private String author;
   private String publisher;
 
-  public Book(int id, String title, Category category, int stock, String author, String publisher) {
+  public Book(Integer id, String title, Category category, int stock, String author, String publisher) {
     this.id = id;
     this.title = title;
     this.category = category;
@@ -25,8 +25,12 @@ public class Book {
     this.publisher = publisher;
   }
 
-  public int getId() {
+  public Integer getId() {
     return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
   }
 
   public String getTitle() {

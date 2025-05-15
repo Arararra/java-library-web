@@ -40,4 +40,24 @@ public class CategoryController {
 
     return categories;
   }
+
+  public boolean createCategory(String name) {
+    Connection connection = DatabaseConnection.getConnection();
+
+    if (connection != null) {
+      String sql = "INSERT INTO categories (name) VALUES (?)";
+      try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        stmt.setString(1, name);
+        stmt.executeUpdate();
+        return true;
+      } catch (SQLException e) {
+        System.err.println("Error saat menyimpan kategori: " + e.getMessage());
+        e.printStackTrace();
+      }
+    } else {
+      System.err.println("Koneksi ke database gagal.");
+    }
+
+    return false;
+  }
 }

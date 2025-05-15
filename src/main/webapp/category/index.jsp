@@ -41,6 +41,16 @@
             </div>
           <% } %>
 
+          <% 
+            String errorMessage = (String) session.getAttribute("errorMessage");
+            if (errorMessage != null) {
+              session.removeAttribute("errorMessage"); 
+          %>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <%= errorMessage %>
+            </div>
+          <% } %>
+
           <div class="card shadow mb-4">
             <div class="card-body">
               <div class="table-responsive">

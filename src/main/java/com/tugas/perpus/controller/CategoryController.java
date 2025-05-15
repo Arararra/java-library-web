@@ -57,4 +57,25 @@ public class CategoryController {
       return "Koneksi ke database gagal.";
     }
   }
+
+  public Category getCategoryById(int id) {
+    Connection connection = DatabaseConnection.getConnection();
+
+    if (connection != null) {
+      String query = "SELECT id, name FROM categories WHERE id = ?";
+      try (PreparedStatement statement = connection.prepareStatement(query)) {
+        statement.setInt(1, id);
+        try (ResultSet resultSet = statement.executeQuery()) {
+          if (resultSet.next()) {
+            String name = resultSet.getString("name");
+            return new Category(id, name);
+          }
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    }
+
+    return null;
+  }
 }

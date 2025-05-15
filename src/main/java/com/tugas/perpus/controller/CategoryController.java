@@ -101,4 +101,26 @@ public class CategoryController {
       return "Koneksi ke database gagal.";
     }
   }
+
+  public String deleteCategory(int id) {
+    Connection connection = DatabaseConnection.getConnection();
+
+    if (connection != null) {
+      String query = "DELETE FROM categories WHERE id = ?";
+      try (PreparedStatement statement = connection.prepareStatement(query)) {
+        statement.setInt(1, id);
+
+        int rowsDeleted = statement.executeUpdate();
+        if (rowsDeleted > 0) {
+          return null; // No error message, operation successful
+        } else {
+          return "Kategori dengan ID " + id + " tidak ditemukan";
+        }
+      } catch (SQLException e) {
+        return "Error saat menghapus kategori: " + e.getMessage();
+      }
+    } else {
+      return "Koneksi ke database gagal.";
+    }
+  }
 }

@@ -57,4 +57,70 @@ public class CategoryController {
       return "Koneksi ke database gagal.";
     }
   }
+
+  public Category getCategoryById(int id) {
+    Connection connection = DatabaseConnection.getConnection();
+
+    if (connection != null) {
+      String query = "SELECT id, name FROM categories WHERE id = ?";
+      try (PreparedStatement statement = connection.prepareStatement(query)) {
+        statement.setInt(1, id);
+        try (ResultSet resultSet = statement.executeQuery()) {
+          if (resultSet.next()) {
+            String name = resultSet.getString("name");
+            return new Category(id, name);
+          }
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    }
+
+    return null;
+  }
+
+  public String updateCategory(int id, String name) {
+    Connection connection = DatabaseConnection.getConnection();
+
+    if (connection != null) {
+      String query = "UPDATE categories SET name = ? WHERE id = ?";
+      try (PreparedStatement statement = connection.prepareStatement(query)) {
+        statement.setString(1, name);
+        statement.setInt(2, id);
+
+        int rowsUpdated = statement.executeUpdate();
+        if (rowsUpdated > 0) {
+          return null; // No error message, operation successful
+        } else {
+          return "Kategori dengan ID " + id + " tidak ditemukan";
+        }
+      } catch (SQLException e) {
+        return "Error saat memperbarui kategori: " + e.getMessage();
+      }
+    } else {
+      return "Koneksi ke database gagal.";
+    }
+  }
+
+  public String deleteCategory(int id) {
+    Connection connection = DatabaseConnection.getConnection();
+
+    if (connection != null) {
+      String query = "DELETE FROM categories WHERE id = ?";
+      try (PreparedStatement statement = connection.prepareStatement(query)) {
+        statement.setInt(1, id);
+
+        int rowsDeleted = statement.executeUpdate();
+        if (rowsDeleted > 0) {
+          return null; // No error message, operation successful
+        } else {
+          return "Kategori dengan ID " + id + " tidak ditemukan";
+        }
+      } catch (SQLException e) {
+        return "Error saat menghapus kategori: " + e.getMessage();
+      }
+    } else {
+      return "Koneksi ke database gagal.";
+    }
+  }
 }

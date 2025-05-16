@@ -29,8 +29,13 @@
         <jsp:include page="/_components/navbar.jsp" />
 
         <div class="container-fluid">
-          <h1 class="h3 mb-2 text-gray-800">Daftar Kategori</h1>
-          
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h3 text-gray-800 mb-0">Daftar Kategori</h1>
+            <a href="<%= request.getContextPath() %>/category/create" class="btn btn-primary">
+              <i class="fas fa-plus mr-1"></i> Tambah Kategori
+            </a>
+          </div>
+
           <%
             String successMessage = (String) session.getAttribute("successMessage");
             if (successMessage != null) {
@@ -41,10 +46,20 @@
             </div>
           <% } %>
 
+          <% 
+            String errorMessage = (String) session.getAttribute("errorMessage");
+            if (errorMessage != null) {
+              session.removeAttribute("errorMessage"); 
+          %>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <%= errorMessage %>
+            </div>
+          <% } %>
+
           <div class="card shadow mb-4">
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-bordered table-striped" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered table-striped table-hover" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
                       <th scope="col">ID</th>
@@ -53,7 +68,7 @@
                   </thead>
                   <tbody>
                     <% for (Category category : categories) { %>
-                      <tr>
+                      <tr style="cursor:pointer" onclick="window.location='<%= request.getContextPath() %>/category/edit/<%= category.getId() %>'">
                         <td><%= category.getId() %></td>
                         <td><%= category.getName() %></td>
                       </tr>

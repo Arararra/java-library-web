@@ -20,7 +20,14 @@
           <jsp:include page="/_components/navbar.jsp" />
 
           <div class="container-fluid">
-            <h1 class="h3 mb-2 text-gray-800">Buat Kategori</h1>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <div class="d-flex align-items-center">
+                <a href="<%= request.getContextPath() %>/category" class="btn btn-danger mr-2">
+                  <i class="fas fa-arrow-left mr-1"></i> Batal
+                </a>
+                <h1 class="h3 text-gray-800 mb-0">Buat Kategori</h1>
+              </div>
+            </div>
 
             <% if (request.getSession().getAttribute("error") != null) { %>
               <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -32,7 +39,7 @@
 
             <div class="card shadow mb-4">
               <div class="card-body justify-content-end">
-                <form method="POST" action="<%= request.getContextPath() %>/controller/category/create" class="d-flex flex-column align-items-end">
+                <form method="POST" action="<%= request.getContextPath() %>/category/create" class="d-flex flex-column align-items-end">
                   <div class="form-group w-100">
                     <label for="name" class="font-weight-bold">Nama</label>
                     <input type="text" class="form-control" id="name" placeholder="Masukkan Nama" name="name" required />

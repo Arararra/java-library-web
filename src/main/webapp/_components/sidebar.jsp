@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<% String currentPath = request.getRequestURI().substring(request.getContextPath().length()); %>
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
   <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.jsp">
     <div class="sidebar-brand-icon rotate-n-15">
@@ -10,13 +10,13 @@
 
   <hr class="sidebar-divider my-0">
 
-  <li class="nav-item active">
-    <a class="nav-link" href="index.html">
+  <li class="nav-item <%= currentPath == null ? "active" : "" %>">
+    <a class="nav-link" href="<%= request.getContextPath() %>">
       <i class="fas fa-fw fa-tachometer-alt"></i>
       <span>Dashboard</span>
     </a>
   </li>
-  
+
   <hr class="sidebar-divider">
 
   <li class="nav-item">
@@ -38,25 +38,25 @@
       </div>
     </div>
   </li>
-  <li class="nav-item">
+  <li class="nav-item <%= currentPath.equals("/charts.html") ? "active" : "" %>">
     <a class="nav-link" href="charts.html">
       <i class="fas fa-fw fa-boxes"></i>
       <span>Peminjaman</span>
     </a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link" href="<%= request.getContextPath() %>/book/index.jsp">
+  <li class="nav-item <%= currentPath.startsWith("/book") ? "active" : "" %>">
+    <a class="nav-link" href="<%= request.getContextPath() %>/book">
       <i class="fas fa-fw fa-book"></i>
       <span>Buku</span>
     </a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link" href="<%= request.getContextPath() %>/category/index.jsp">
+  <li class="nav-item <%= currentPath.startsWith("/category") ? "active" : "" %>">
+    <a class="nav-link" href="<%= request.getContextPath() %>/category">
       <i class="fas fa-fw fa-th-large"></i>
       <span>Kategori</span>
     </a>
   </li>
-  <li class="nav-item">
+  <li class="nav-item <%= currentPath.equals("/tables.html") ? "active" : "" %>">
     <a class="nav-link" href="tables.html">
       <i class="fas fa-fw fa-users"></i>
       <span>Member</span>

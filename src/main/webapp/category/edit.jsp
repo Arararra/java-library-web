@@ -22,7 +22,12 @@
 
           <div class="container-fluid">
             <div class="d-flex justify-content-between align-items-center mb-4">
-              <h1 class="h3 text-gray-800 mb-0">Edit Kategori</h1>
+              <div class="d-flex align-items-center">
+                <a href="<%= request.getContextPath() %>/category" class="btn btn-danger mr-2">
+                  <i class="fas fa-arrow-left mr-1"></i> Batal
+                </a>
+                <h1 class="h3 text-gray-800 mb-0">Edit Kategori</h1>
+              </div>
               <form method="POST" action="<%= request.getContextPath() %>/category/delete/<%= category.getId() %>" onsubmit="return confirm('Apakah Anda yakin ingin menghapus kategori ini?');">
                 <button type="submit" class="btn btn-danger">Hapus</button>
               </form>

@@ -20,7 +20,14 @@
           <jsp:include page="/_components/navbar.jsp" />
 
           <div class="container-fluid">
-            <h1 class="h3 mb-2 text-gray-800">Buat Kategori</h1>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <div class="d-flex align-items-center">
+                <a href="<%= request.getContextPath() %>/category" class="btn btn-danger mr-2">
+                  <i class="fas fa-arrow-left mr-1"></i> Batal
+                </a>
+                <h1 class="h3 text-gray-800 mb-0">Buat Kategori</h1>
+              </div>
+            </div>
 
             <% if (request.getSession().getAttribute("error") != null) { %>
               <div class="alert alert-danger alert-dismissible fade show" role="alert">

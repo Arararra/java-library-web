@@ -8,7 +8,7 @@ package com.tugas.perpus.model;
  *
  * @author LENOVO
  */
-class Admin extends User {
+public class Admin extends User {
   public Admin(int id, String name, String email, String phone, String address) {
     super(id, name, email, phone, address, "admin");
   }

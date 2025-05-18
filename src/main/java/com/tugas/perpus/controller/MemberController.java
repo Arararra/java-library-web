@@ -97,6 +97,21 @@ public class MemberController {
   public String updateMember(int id, String name, String email, String address, String phone, String role) {
     Connection connection = DatabaseConnection.getConnection();
     if (connection != null) {
+      // Validasi email dan telepon unik, kecuali untuk user ini sendiri
+      String checkQuery = "SELECT COUNT(*) FROM users WHERE (email = ? OR phone = ?) AND id <> ?";
+      try (PreparedStatement checkStmt = connection.prepareStatement(checkQuery)) {
+        checkStmt.setString(1, email);
+        checkStmt.setString(2, phone);
+        checkStmt.setInt(3, id);
+        try (ResultSet rs = checkStmt.executeQuery()) {
+          if (rs.next() && rs.getInt(1) > 0) {
+            return "Email atau nomor telepon sudah digunakan oleh user lain.";
+          }
+        }
+      } catch (SQLException e) {
+        return "Error saat validasi email/telepon: " + e.getMessage();
+      }
+      // Update jika unik
       String query = "UPDATE users SET name=?, email=?, address=?, phone=?, role=? WHERE id=? AND role = 'member'";
       try (PreparedStatement statement = connection.prepareStatement(query)) {
         statement.setString(1, name);

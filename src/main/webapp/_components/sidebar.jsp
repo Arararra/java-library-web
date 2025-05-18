@@ -56,8 +56,8 @@
       <span>Kategori</span>
     </a>
   </li>
-  <li class="nav-item <%= currentPath.equals("/tables.html") ? "active" : "" %>">
-    <a class="nav-link" href="tables.html">
+  <li class="nav-item <%= currentPath.startsWith("/member") ? "active" : "" %>">
+    <a class="nav-link" href="<%= request.getContextPath() %>/member">
       <i class="fas fa-fw fa-users"></i>
       <span>Member</span>
     </a>

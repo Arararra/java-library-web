@@ -11,7 +11,7 @@ import com.tugas.perpus.util.PasswordHelper;
  * @author LENOVO
  */
 public class User {
-  private final int id;
+  private Integer id; // Changed from int to Integer for auto-increment compatibility
   private String name;
   private String email;
   private String phone;
@@ -19,7 +19,7 @@ public class User {
   private String password;
   protected String role;
 
-  public User(int id, String name, String email, String phone, String address, String role) {
+  public User(Integer id, String name, String email, String phone, String address, String role) {
     this.id = id;
     this.name = name;
     this.email = email;
@@ -28,8 +28,12 @@ public class User {
     this.role = role;
   }
 
-  public int getId() {
+  public Integer getId() {
     return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
   }
 
   public String getName() {

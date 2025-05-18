@@ -38,6 +38,20 @@ public class MemberController {
   public String insertMember(String name, String email, String address, String phone, String role) {
     Connection connection = DatabaseConnection.getConnection();
     if (connection != null) {
+      // Cek email dan telepon unik
+      String checkQuery = "SELECT COUNT(*) FROM users WHERE email = ? OR phone = ?";
+      try (PreparedStatement checkStmt = connection.prepareStatement(checkQuery)) {
+        checkStmt.setString(1, email);
+        checkStmt.setString(2, phone);
+        try (ResultSet rs = checkStmt.executeQuery()) {
+          if (rs.next() && rs.getInt(1) > 0) {
+            return "Email atau nomor telepon sudah digunakan oleh user lain.";
+          }
+        }
+      } catch (SQLException e) {
+        return "Error saat validasi email/telepon: " + e.getMessage();
+      }
+      // Insert jika unik
       String query = "INSERT INTO users (name, email, address, phone, role) VALUES (?, ?, ?, ?, ?)";
       try (PreparedStatement statement = connection.prepareStatement(query)) {
         statement.setString(1, name);

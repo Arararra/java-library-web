@@ -12,6 +12,11 @@ import java.io.IOException;
 public class MemberCreateServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    String error = (String) request.getSession().getAttribute("error");
+    if (error != null) {
+      request.setAttribute("error", error);
+      request.getSession().removeAttribute("error");
+    }
     request.getRequestDispatcher("/member/create.jsp").forward(request, response);
   }
 

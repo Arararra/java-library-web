@@ -6,10 +6,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import com.tugas.perpus.controller.CategoryController;
+import com.tugas.perpus.controller.BookController;
 
-@WebServlet(name = "CategoryDeleteServlet", urlPatterns = {"/category/delete/*"})
-public class CategoryDeleteServlet extends HttpServlet {
+@WebServlet(name = "BookDeleteServlet", urlPatterns = {"/book/delete/*"})
+public class BookDeleteServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     String idParam = request.getPathInfo();
@@ -19,18 +19,18 @@ public class CategoryDeleteServlet extends HttpServlet {
 
     try {
       int id = Integer.parseInt(idParam);
-      CategoryController categoryController = new CategoryController();
-      String errorMessage = categoryController.deleteCategory(id);
+      BookController bookController = new BookController();
+      String errorMessage = bookController.deleteBook(id);
 
       if (errorMessage != null) {
         request.getSession().setAttribute("error", errorMessage);
       } else {
-        request.getSession().setAttribute("successMessage", "Kategori berhasil dihapus");
+        request.getSession().setAttribute("successMessage", "Buku berhasil dihapus");
       }
 
-      response.sendRedirect(request.getContextPath() + "/category");
+      response.sendRedirect(request.getContextPath() + "/book");
     } catch (NumberFormatException e) {
-      response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid category ID");
+      response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid book ID");
     }
   }
 }

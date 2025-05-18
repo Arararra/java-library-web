@@ -25,7 +25,7 @@ public class CategoryEditServlet extends HttpServlet {
 
       if (category == null) {
         request.getSession().setAttribute("errorMessage", "Kategori dengan ID " + id + " tidak ditemukan");
-        response.sendRedirect(request.getContextPath() + "/category/index.jsp");
+        response.sendRedirect(request.getContextPath() + "/category");
         return;
       }
 
@@ -61,7 +61,7 @@ public class CategoryEditServlet extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/category/edit/" + id);
       } else {
         request.getSession().setAttribute("successMessage", "Kategori berhasil diperbarui");
-        response.sendRedirect(request.getContextPath() + "/category/index.jsp");
+        response.sendRedirect(request.getContextPath() + "/category");
       }
     } catch (NumberFormatException e) {
       response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid category ID");

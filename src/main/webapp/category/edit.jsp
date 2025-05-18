@@ -50,7 +50,7 @@
                     <label for="name" class="font-weight-bold">Nama</label>
                     <input type="text" class="form-control" id="name" placeholder="Masukkan Nama" name="name" value="<%= category.getName() %>" required />
                   </div>
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                 </form>
               </div>
             </div>

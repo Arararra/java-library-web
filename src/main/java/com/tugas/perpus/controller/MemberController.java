@@ -38,7 +38,7 @@ public class MemberController {
   public String insertMember(String name, String email, String address, String phone, String role) {
     Connection connection = DatabaseConnection.getConnection();
     if (connection != null) {
-      String query = "INSERT INTO members (name, email, address, phone, role) VALUES (?, ?, ?, ?, ?)";
+      String query = "INSERT INTO users (name, email, address, phone, role) VALUES (?, ?, ?, ?, ?)";
       try (PreparedStatement statement = connection.prepareStatement(query)) {
         statement.setString(1, name);
         statement.setString(2, email);
@@ -58,7 +58,7 @@ public class MemberController {
   public Member getMemberById(int id) {
     Connection connection = DatabaseConnection.getConnection();
     if (connection != null) {
-      String query = "SELECT id, name, email, phone, address, role FROM members WHERE id = ?";
+      String query = "SELECT id, name, email, phone, address, role FROM users WHERE id = ? AND role = 'member'";
       try (PreparedStatement statement = connection.prepareStatement(query)) {
         statement.setInt(1, id);
         try (ResultSet resultSet = statement.executeQuery()) {
@@ -67,8 +67,10 @@ public class MemberController {
             String email = resultSet.getString("email");
             String phone = resultSet.getString("phone");
             String address = resultSet.getString("address");
-            // String role = resultSet.getString("role");
-            return new Member(id, name, email, phone, address);
+            String role = resultSet.getString("role");
+            Member member = new Member(id, name, email, phone, address);
+            member.setRole(role);
+            return member;
           }
         }
       } catch (SQLException e) {
@@ -81,7 +83,7 @@ public class MemberController {
   public String updateMember(int id, String name, String email, String address, String phone, String role) {
     Connection connection = DatabaseConnection.getConnection();
     if (connection != null) {
-      String query = "UPDATE members SET name=?, email=?, address=?, phone=?, role=? WHERE id=?";
+      String query = "UPDATE users SET name=?, email=?, address=?, phone=?, role=? WHERE id=? AND role = 'member'";
       try (PreparedStatement statement = connection.prepareStatement(query)) {
         statement.setString(1, name);
         statement.setString(2, email);
@@ -106,7 +108,7 @@ public class MemberController {
   public String deleteMember(int id) {
     Connection connection = DatabaseConnection.getConnection();
     if (connection != null) {
-      String query = "DELETE FROM members WHERE id = ?";
+      String query = "DELETE FROM users WHERE id = ? AND role = 'member'";
       try (PreparedStatement statement = connection.prepareStatement(query)) {
         statement.setInt(1, id);
         int rows = statement.executeUpdate();

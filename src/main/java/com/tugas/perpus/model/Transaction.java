@@ -25,11 +25,11 @@ public class Transaction {
     this.book = book;
     this.borrowDate = borrowDate;
     this.dueDate = dueDate;
+    this.status = status;
     this.returnDate = null;
-    this.status = 0;
   }
 
-  private String getStatusDescription() {
+  public String getStatusDescription() {
     switch (status) {
       case 0:
         return "Borrowed";

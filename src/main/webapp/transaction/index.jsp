@@ -66,11 +66,12 @@
                       <th scope="col">Jatuh Tempo</th>
                       <th scope="col">Tanggal Kembali</th>
                       <th scope="col">Status</th>
+                      <th scope="col">Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
                     <% for (Transaction trx : transactions) { %>
-                      <tr style="cursor:pointer" onclick="window.location='<%= request.getContextPath() %>/transaction/edit/<%= trx.getId() %>'">
+                      <tr>
                         <td><%= trx.getId() %></td>
                         <td><%= trx.getUser() != null ? trx.getUser().getName() : "-" %></td>
                         <td><%= trx.getBook() != null ? trx.getBook().getTitle() : "-" %></td>
@@ -78,6 +79,14 @@
                         <td><%= trx.getDueDate() != null ? trx.getDueDate() : "-" %></td>
                         <td><%= trx.getReturnDate() != null ? trx.getReturnDate() : "-" %></td>
                         <td><%= trx.getStatusDescription() %></td>
+                        <td style="min-width:120px;">
+                          <form method="post" action="<%= request.getContextPath() %>/transaction/finish/<%= trx.getId() %>" style="display:inline;" onsubmit="return confirm('Yakin ingin menyelesaikan transaksi ini?');">
+                            <button type="submit" class="btn btn-success btn-sm" <%= trx.getReturnDate() != null ? "disabled" : "" %>>Finish</button>
+                          </form>
+                          <form method="post" action="<%= request.getContextPath() %>/transaction/delete/<%= trx.getId() %>" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus transaksi ini?');">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                          </form>
+                        </td>
                       </tr>
                     <% } %>
                   </tbody>

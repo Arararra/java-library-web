@@ -74,26 +74,40 @@ public class TransactionController {
         }
     }
 
-    public String updateTransaction(int id, int userId, int bookId, Date borrowDate, Date dueDate, Date returnDate, int status) {
+    public String finishTransaction(int id) {
         Connection connection = DatabaseConnection.getConnection();
         if (connection != null) {
-            String query = "UPDATE transactions SET user_id=?, book_id=?, borrow_date=?, due_date=?, return_date=?, status=? WHERE id=?";
+            Transaction trx = getTransactionById(id);
+            if (trx == null) {
+                return "Transaksi tidak ditemukan.";
+            }
+            if (trx.getReturnDate() != null) {
+                return "Transaksi sudah selesai.";
+            }
+            String query = "UPDATE transactions SET return_date=? WHERE id=?";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setInt(1, userId);
-                statement.setInt(2, bookId);
-                statement.setDate(3, borrowDate);
-                statement.setDate(4, dueDate);
-                statement.setDate(5, returnDate);
-                statement.setInt(6, status);
-                statement.setInt(7, id);
+                statement.setDate(1, Date.valueOf(LocalDate.now()));
+                statement.setInt(2, id);
                 int rows = statement.executeUpdate();
                 if (rows > 0) {
+                    // Tambah stok buku kembali
+                    if (trx.getBook() != null) {
+                        try (PreparedStatement bookStmt = connection.prepareStatement("UPDATE books SET stock = stock + 1 WHERE id = ?")) {
+                            bookStmt.setInt(1, trx.getBook().getId());
+                            bookStmt.executeUpdate();
+                        }
+                    }
+                    // Update status fines menjadi 1 untuk transaksi ini
+                    try (PreparedStatement fineStmt = connection.prepareStatement("UPDATE fines SET status = 1 WHERE transaction_id = ?")) {
+                        fineStmt.setInt(1, id);
+                        fineStmt.executeUpdate();
+                    }
                     return null;
                 } else {
                     return "Transaksi dengan ID " + id + " tidak ditemukan.";
                 }
             } catch (SQLException e) {
-                return "Error saat mengedit transaksi: " + e.getMessage();
+                return "Error saat menyelesaikan transaksi: " + e.getMessage();
             }
         } else {
             return "Koneksi ke database gagal.";
@@ -139,14 +153,31 @@ public class TransactionController {
     public String deleteTransaction(int id) {
         Connection connection = DatabaseConnection.getConnection();
         if (connection != null) {
-            String query = "DELETE FROM transactions WHERE id = ?";
-            try (PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setInt(1, id);
-                int rows = statement.executeUpdate();
-                if (rows > 0) {
-                    return null;
-                } else {
-                    return "Transaksi dengan ID " + id + " tidak ditemukan.";
+            try {
+                // Ambil transaksi untuk cek apakah sudah dikembalikan
+                Transaction trx = getTransactionById(id);
+                // Hapus dulu fines yang berelasi
+                try (PreparedStatement fineStmt = connection.prepareStatement("DELETE FROM fines WHERE transaction_id = ?")) {
+                    fineStmt.setInt(1, id);
+                    fineStmt.executeUpdate();
+                }
+                // Jika transaksi belum dikembalikan (return_date masih null), kembalikan stok buku
+                if (trx != null && trx.getReturnDate() == null && trx.getBook() != null) {
+                    try (PreparedStatement bookStmt = connection.prepareStatement("UPDATE books SET stock = stock + 1 WHERE id = ?")) {
+                        bookStmt.setInt(1, trx.getBook().getId());
+                        bookStmt.executeUpdate();
+                    }
+                }
+                // Baru hapus transaksi
+                String query = "DELETE FROM transactions WHERE id = ?";
+                try (PreparedStatement statement = connection.prepareStatement(query)) {
+                    statement.setInt(1, id);
+                    int rows = statement.executeUpdate();
+                    if (rows > 0) {
+                        return null;
+                    } else {
+                        return "Transaksi dengan ID " + id + " tidak ditemukan.";
+                    }
                 }
             } catch (SQLException e) {
                 return "Error saat menghapus transaksi: " + e.getMessage();

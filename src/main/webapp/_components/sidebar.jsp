@@ -38,8 +38,8 @@
       </div>
     </div>
   </li>
-  <li class="nav-item <%= currentPath.equals("/charts.html") ? "active" : "" %>">
-    <a class="nav-link" href="charts.html">
+  <li class="nav-item <%= currentPath.startsWith("/transaction") ? "active" : "" %>">
+    <a class="nav-link" href="<%= request.getContextPath() %>/transaction">
       <i class="fas fa-fw fa-boxes"></i>
       <span>Peminjaman</span>
     </a>

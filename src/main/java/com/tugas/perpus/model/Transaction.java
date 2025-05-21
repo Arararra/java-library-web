@@ -11,28 +11,36 @@ package com.tugas.perpus.model;
 import java.time.LocalDate;
 
 public class Transaction {
-  private Integer id; // Changed from int to Integer for auto-increment compatibility
+  private Integer id;
   private User user;
   private Book book;
-  private LocalDate borrowDate; // Date when the book is borrowed
-  private LocalDate dueDate; // Date when the book is due to be returned
-  private LocalDate returnDate; // Date when the book is actually returned
-  private int status; // 0: borrowed, 1: returned, 2: overdue
+  private LocalDate borrowDate;
+  private LocalDate dueDate;
+  private LocalDate returnDate;
 
-  public Transaction(Integer id, User user, Book book, LocalDate borrowDate, LocalDate dueDate, int status) {
+  public Transaction(Integer id, User user, Book book, LocalDate borrowDate, LocalDate dueDate) {
     this.id = id;
     this.user = user;
     this.book = book;
     this.borrowDate = borrowDate;
     this.dueDate = dueDate;
     this.returnDate = null;
-    this.status = 0;
   }
 
-  private String getStatusDescription() {
-    switch (status) {
+  public int getStatus() {
+    if (returnDate != null) {
+      return 1; // returned
+    } else if (dueDate != null && LocalDate.now().isAfter(dueDate)) {
+      return 2; // overdue
+    } else {
+      return 0; // borrowed
+    }
+  }
+
+  public String getStatusDescription() {
+    switch (getStatus()) {
       case 0:
-        return "Borrowed";
+        return "Borrowing";
       case 1:
         return "Returned";
       case 2:
@@ -83,13 +91,6 @@ public class Transaction {
   }
   public void setReturnDate(LocalDate returnDate) {
     this.returnDate = returnDate;
-  }
-
-  public int getStatus() {
-    return status;
-  }
-  public void setStatus(int status) {
-    this.status = status;
   }
 
   public void displayTransaction() {

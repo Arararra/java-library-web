@@ -153,4 +153,38 @@ public class MemberController {
       return "Koneksi ke database gagal.";
     }
   }
+
+  public List<Member> getEligibleMembersForBorrow() {
+    List<Member> members = new ArrayList<>();
+    Connection connection = DatabaseConnection.getConnection();
+    if (connection != null) {
+      String query =
+        "SELECT u.id, u.name, u.email, u.phone, u.address, u.role " +
+        "FROM users u " +
+        "WHERE u.role = 'member' AND (" +
+        // Tidak ada transaksi sama sekali
+        "NOT EXISTS (SELECT 1 FROM transactions t WHERE t.user_id = u.id) " +
+        "OR " +
+        // Semua transaksi sudah dikembalikan (tidak ada transaksi return_date IS NULL)
+        "(NOT EXISTS (SELECT 1 FROM transactions t2 WHERE t2.user_id = u.id AND t2.return_date IS NULL))" +
+        ")";
+      try (PreparedStatement statement = connection.prepareStatement(query);
+           ResultSet resultSet = statement.executeQuery()) {
+        while (resultSet.next()) {
+          int id = resultSet.getInt("id");
+          String name = resultSet.getString("name");
+          String email = resultSet.getString("email");
+          String phone = resultSet.getString("phone");
+          String address = resultSet.getString("address");
+          String role = resultSet.getString("role");
+          Member member = new Member(id, name, email, phone, address);
+          member.setRole(role);
+          members.add(member);
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    }
+    return members;
+  }
 }

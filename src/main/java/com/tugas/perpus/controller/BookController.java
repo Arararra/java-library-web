@@ -140,4 +140,52 @@ public class BookController {
       return "Koneksi ke database gagal.";
     }
   }
+
+  public List<Book> getAvailableBooks() {
+    List<Book> books = new ArrayList<>();
+    Connection connection = DatabaseConnection.getConnection();
+    if (connection != null) {
+      String query = "SELECT b.id, b.title, b.stock, b.author, b.publisher, c.id AS category_id, c.name AS category_name " +
+                     "FROM books b " +
+                     "JOIN categories c ON b.category_id = c.id " +
+                     "WHERE b.stock > 0";
+      try (PreparedStatement statement = connection.prepareStatement(query);
+           ResultSet resultSet = statement.executeQuery()) {
+        while (resultSet.next()) {
+          int id = resultSet.getInt("id");
+          String title = resultSet.getString("title");
+          int stock = resultSet.getInt("stock");
+          String author = resultSet.getString("author");
+          String publisher = resultSet.getString("publisher");
+          int categoryId = resultSet.getInt("category_id");
+          String categoryName = resultSet.getString("category_name");
+          Category category = new Category(categoryId, categoryName);
+          books.add(new Book(id, title, category, stock, author, publisher));
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    }
+    return books;
+  }
+
+  public String decrementBookStock(int bookId) {
+    Connection connection = DatabaseConnection.getConnection();
+    if (connection != null) {
+      String query = "UPDATE books SET stock = stock - 1 WHERE id = ? AND stock > 0";
+      try (PreparedStatement statement = connection.prepareStatement(query)) {
+        statement.setInt(1, bookId);
+        int rows = statement.executeUpdate();
+        if (rows > 0) {
+          return null; // success
+        } else {
+          return "Stok buku tidak mencukupi atau buku tidak ditemukan.";
+        }
+      } catch (SQLException e) {
+        return "Error saat mengurangi stok buku: " + e.getMessage();
+      }
+    } else {
+      return "Koneksi ke database gagal.";
+    }
+  }
 }

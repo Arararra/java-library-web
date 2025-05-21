@@ -54,17 +54,16 @@ public class TransactionController {
         return transactions;
     }
 
-    public String insertTransaction(int userId, int bookId, Date borrowDate, Date dueDate, Date returnDate, int status) {
+    public String insertTransaction(int userId, int bookId, Date borrowDate, Date dueDate, Date returnDate) {
         Connection connection = DatabaseConnection.getConnection();
         if (connection != null) {
-            String query = "INSERT INTO transactions (user_id, book_id, borrow_date, due_date, return_date, status) VALUES (?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO transactions (user_id, book_id, borrow_date, due_date, return_date) VALUES (?, ?, ?, ?, ?)";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setInt(1, userId);
                 statement.setInt(2, bookId);
                 statement.setDate(3, borrowDate);
                 statement.setDate(4, dueDate);
                 statement.setDate(5, returnDate);
-                statement.setInt(6, status);
                 statement.executeUpdate();
                 return null; // success
             } catch (SQLException e) {

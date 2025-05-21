@@ -40,7 +40,7 @@ public class Transaction {
   public String getStatusDescription() {
     switch (getStatus()) {
       case 0:
-        return "Borrowed";
+        return "Borrowing";
       case 1:
         return "Returned";
       case 2:

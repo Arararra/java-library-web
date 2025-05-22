@@ -40,11 +40,11 @@ public class Transaction {
   public String getStatusDescription() {
     switch (getStatus()) {
       case 0:
-        return "Borrowing";
+        return "Dipinjam";
       case 1:
-        return "Returned";
+        return "Selesai";
       case 2:
-        return "Overdue";
+        return "Terlambat";
       default:
         return "Unknown";
     }

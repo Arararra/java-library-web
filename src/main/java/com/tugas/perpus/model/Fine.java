@@ -15,6 +15,7 @@ public class Fine {
   private Integer id; // Changed from int to Integer for auto-increment compatibility
   private final Transaction transaction;
   private int status; // 0: Unpaid, 1: Paid
+  private long totalDenda = 0;
 
   public Fine(Integer id, Transaction transaction) {
     this.id = id;
@@ -51,6 +52,14 @@ public class Fine {
   }
   public void setStatus(int status) {
     this.status = status;
+  }
+
+  public long getTotalDenda() {
+    return totalDenda;
+  }
+
+  public void setTotalDenda(long totalDenda) {
+    this.totalDenda = totalDenda;
   }
 
   public void displayFine() {

@@ -81,10 +81,10 @@
                         <td><%= trx.getStatusDescription() %></td>
                         <td style="min-width:120px;">
                           <form method="post" action="<%= request.getContextPath() %>/transaction/finish/<%= trx.getId() %>" style="display:inline;" onsubmit="return confirm('Yakin ingin menyelesaikan transaksi ini?');">
-                            <button type="submit" class="btn btn-success btn-sm" <%= trx.getReturnDate() != null ? "disabled" : "" %>>Finish</button>
+                            <button type="submit" class="btn btn-success btn-sm" <%= trx.getReturnDate() != null ? "disabled" : "" %>>Selesaikan</button>
                           </form>
                           <form method="post" action="<%= request.getContextPath() %>/transaction/delete/<%= trx.getId() %>" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus transaksi ini?');">
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
                           </form>
                         </td>
                       </tr>

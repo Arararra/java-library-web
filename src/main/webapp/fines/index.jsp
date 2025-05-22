@@ -26,6 +26,25 @@
       <div id="content">
         <jsp:include page="/_components/navbar.jsp" />
         <div class="container-fluid">
+          <% 
+            String successMessage = (String) session.getAttribute("successMessage");
+            if (successMessage != null) {
+              session.removeAttribute("successMessage");
+          %>
+            <div class="alert alert-success alert-dismissible fade show" role="alert" id="success-alert">
+              <%= successMessage %>
+            </div>
+          <% } %>
+
+          <% 
+            String errorMessage = (String) session.getAttribute("errorMessage");
+            if (errorMessage != null) {
+              session.removeAttribute("errorMessage"); 
+          %>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <%= errorMessage %>
+            </div>
+          <% } %>
           <div class="d-flex justify-content-between align-items-center mb-4">
             <h1 class="h3 mb-2 text-gray-800 mb-0">Daftar Denda</h1>
           </div>
@@ -39,6 +58,7 @@
                       <th>ID Peminjaman</th>
                       <th>Total Denda</th>
                       <th>Status</th>
+                      <th>Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -48,6 +68,15 @@
                         <td><%= fine.getTransaction().getId() %></td>
                         <td>Rp <%= fine.getTotalDenda() %></td>
                         <td><%= fine.getStatus() == 1 ? "Selesai" : "Belum Selesai" %></td>
+                        <td>
+                          <% if (fine.getStatus() == 0) { %>
+                            <form method="post" action="<%= request.getContextPath() %>/fines/pay/<%= fine.getId() %>" style="display:inline;" onsubmit="return confirm('Yakin ingin membayar denda ini?');">
+                              <button type="submit" class="btn btn-success btn-sm">Bayar</button>
+                            </form>
+                          <% } else { %>
+                            <span class="text-success">Lunas</span>
+                          <% } %>
+                        </td>
                       </tr>
                     <% } %>
                   </tbody>

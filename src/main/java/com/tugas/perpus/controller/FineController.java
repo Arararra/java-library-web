@@ -52,4 +52,41 @@ public class FineController {
         }
         return fines;
     }
+
+    public String payFine(int fineId) {
+        Connection connection = DatabaseConnection.getConnection();
+        if (connection == null) {
+            return "Koneksi ke database gagal.";
+        }
+        try {
+            // Ambil transaction_id dari fine
+            int transactionId = -1;
+            String selectQuery = "SELECT transaction_id FROM fines WHERE id = ?";
+            try (PreparedStatement selectStmt = connection.prepareStatement(selectQuery)) {
+                selectStmt.setInt(1, fineId);
+                try (ResultSet rs = selectStmt.executeQuery()) {
+                    if (rs.next()) {
+                        transactionId = rs.getInt("transaction_id");
+                    } else {
+                        return "Denda tidak ditemukan.";
+                    }
+                }
+            }
+            // Update status fine menjadi 1
+            String updateFine = "UPDATE fines SET status = 1 WHERE id = ?";
+            try (PreparedStatement updateStmt = connection.prepareStatement(updateFine)) {
+                updateStmt.setInt(1, fineId);
+                updateStmt.executeUpdate();
+            }
+            // Selesaikan transaksi (set return_date dan update stok buku)
+            TransactionController trxController = new TransactionController();
+            String err = trxController.finishTransaction(transactionId);
+            if (err != null && !err.contains("sudah selesai")) {
+                return err;
+            }
+            return null;
+        } catch (SQLException e) {
+            return "Error saat membayar denda: " + e.getMessage();
+        }
+    }
 }

@@ -81,10 +81,10 @@ INSERT INTO transactions (id, user_id, book_id, borrow_date, due_date, return_da
 (4, 6, 4, '2025-04-04', '2025-04-14', NULL),
 (5, 7, 5, '2025-04-05', '2025-04-13', '2025-04-13'),
 (6, 8, 6, '2025-04-06', '2025-04-16', NULL),
-(7, 9, 7, '2025-04-07', '2025-04-17', NULL),
-(8, 10, 8, '2025-04-08', '2025-04-18', NULL),
-(9, 3, 9, '2025-04-09', '2025-04-19', NULL),
-(10, 4, 10, '2025-04-10', '2025-04-20', NULL);
+(7, 9, 7, '2025-05-07', '2025-06-17', NULL),
+(8, 10, 8, '2025-05-08', '2025-05-18', '2025-05-19'),
+(9, 3, 9, '2025-05-09', '2025-06-19', NULL),
+(10, 4, 10, '2025-05-10', '2025-06-20', NULL);
 
 -- Tabel fines
 CREATE TABLE fines (
@@ -95,13 +95,24 @@ CREATE TABLE fines (
 );
 
 INSERT INTO fines (id, transaction_id, status) VALUES
-(1, 3, 0),
-(2, 5, 1),
-(3, 1, 1),
-(4, 4, 0),
-(5, 2, 0),
-(6, 6, 0),
-(7, 7, 0),
-(8, 8, 0),
-(9, 9, 0),
-(10, 10, 0);
+(1, 2, 0),
+(2, 4, 0),
+(3, 6, 0),
+(4, 8, 1);
+
+-- Event scheduler untuk menambah entry pada tabel fines jika due_date transaksi sudah lewat dan belum ada entry di fines
+DELIMITER //
+CREATE EVENT IF NOT EXISTS add_fines_for_overdue_transactions
+ON SCHEDULE EVERY 1 MINUTE
+DO
+BEGIN
+    INSERT INTO fines (transaction_id, status)
+    SELECT t.id, 0
+    FROM transactions t
+    LEFT JOIN fines f ON t.id = f.transaction_id
+    WHERE t.return_date IS NULL AND t.due_date < CURDATE() AND f.id IS NULL;
+END //
+DELIMITER ;
+
+-- Aktifkan event scheduler jika belum aktif
+SET GLOBAL event_scheduler = ON;

@@ -8,7 +8,7 @@
   Member member = (Member) request.getAttribute("member");
   User user = (User) session.getAttribute("user");
   if (user != null && "member".equals(user.getRole())) {
-    response.sendRedirect(request.getContextPath() + "/index.jsp");
+    response.sendRedirect(request.getContextPath());
     return;
   }
 %>

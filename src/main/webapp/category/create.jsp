@@ -1,9 +1,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.tugas.perpus.controller.CategoryController" %>
 <%@ page import="com.tugas.perpus.model.Category" %>
+<%@ page import="com.tugas.perpus.model.User" %>
 
 <%
   request.setAttribute("title", "Buat Kategori");
+
+  User user = (User) session.getAttribute("user");
+  if (user != null && "member".equals(user.getRole())) {
+    response.sendRedirect(request.getContextPath());
+    return;
+  }
 %>
 
 <!DOCTYPE html>

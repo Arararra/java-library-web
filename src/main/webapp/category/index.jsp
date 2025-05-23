@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.tugas.perpus.controller.CategoryController" %>
 <%@ page import="com.tugas.perpus.model.Category" %>
+<%@ page import="com.tugas.perpus.model.User" %>
 
 <%
   request.setAttribute("title", "Kategori");
@@ -12,6 +13,8 @@
   }
 
   java.util.List<Category> categories = categoryController.getCategoriesFromDatabase();
+  User user = (User) session.getAttribute("user");
+  boolean isMember = user != null && "member".equals(user.getRole());
 %>
 
 <!DOCTYPE html>
@@ -68,7 +71,7 @@
                   </thead>
                   <tbody>
                     <% for (Category category : categories) { %>
-                      <tr style="cursor:pointer" onclick="window.location='<%= request.getContextPath() %>/category/edit/<%= category.getId() %>'">
+                      <tr<% if (!isMember) { %> style="cursor:pointer" onclick="window.location='<%= request.getContextPath() %>/book/edit/<%= book.getId() %>'"<% } %>>
                         <td><%= category.getId() %></td>
                         <td><%= category.getName() %></td>
                       </tr>

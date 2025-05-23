@@ -4,6 +4,7 @@
 <%@ page import="com.tugas.perpus.controller.FineController" %>
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.tugas.perpus.model.User" %>
 <%
   request.setAttribute("title", "Denda");
   FineController fineController = (FineController) session.getAttribute("fineController");
@@ -11,7 +12,9 @@
     fineController = new FineController();
     session.setAttribute("fineController", fineController);
   }
-  List<Fine> fines = fineController.getFinesFromDatabase();
+  User user = (User) session.getAttribute("user");
+  boolean isMember = user != null && "member".equals(user.getRole());
+  List<Fine> fines = fineController.getFinesFromDatabase(user);
 %>
 <!DOCTYPE html>
 <html>
@@ -58,7 +61,9 @@
                       <th>ID Peminjaman</th>
                       <th>Total Denda</th>
                       <th>Status</th>
+                      <% if (!isMember) { %>
                       <th>Aksi</th>
+                      <% } %>
                     </tr>
                   </thead>
                   <tbody>
@@ -68,6 +73,7 @@
                         <td><%= fine.getTransaction().getId() %></td>
                         <td>Rp <%= fine.getTotalDenda() %></td>
                         <td><%= fine.getStatus() == 1 ? "Selesai" : "Belum Selesai" %></td>
+                        <% if (!isMember) { %>
                         <td>
                           <% if (fine.getStatus() == 0) { %>
                             <form method="post" action="<%= request.getContextPath() %>/fines/pay/<%= fine.getId() %>" style="display:inline;" onsubmit="return confirm('Yakin ingin membayar denda ini?');">
@@ -77,6 +83,7 @@
                             <span class="text-success">Lunas</span>
                           <% } %>
                         </td>
+                        <% } %>
                       </tr>
                     <% } %>
                   </tbody>

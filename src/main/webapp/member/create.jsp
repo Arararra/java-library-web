@@ -1,9 +1,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.tugas.perpus.controller.MemberController" %>
 <%@ page import="com.tugas.perpus.model.Member" %>
+<%@ page import="com.tugas.perpus.model.User" %>
 <%
   request.setAttribute("title", "Tambah Member");
   String error = (String) request.getAttribute("error");
+  
+  User user = (User) session.getAttribute("user");
+  if (user != null && "member".equals(user.getRole())) {
+    response.sendRedirect(request.getContextPath() + "/index.jsp");
+    return;
+  }
 %>
 <!DOCTYPE html>
 <html>

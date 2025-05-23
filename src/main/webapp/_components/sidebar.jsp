@@ -1,5 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.tugas.perpus.model.User" %>
 <% String currentPath = request.getRequestURI().substring(request.getContextPath().length()); %>
+<%
+  User user = (User) session.getAttribute("user");
+  boolean isMember = user != null && "member".equals(user.getRole());
+%>
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
   <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.jsp">
     <div class="sidebar-brand-icon rotate-n-15">
@@ -43,12 +48,14 @@
       <span>Kategori</span>
     </a>
   </li>
+  <% if (!isMember) { %>
   <li class="nav-item <%= currentPath.startsWith("/member") ? "active" : "" %>">
     <a class="nav-link" href="<%= request.getContextPath() %>/member">
       <i class="fas fa-fw fa-users"></i>
       <span>Member</span>
     </a>
   </li>
+  <% } %>
 
   <hr class="sidebar-divider d-none d-md-block">
 

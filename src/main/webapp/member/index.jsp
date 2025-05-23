@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.tugas.perpus.controller.MemberController" %>
 <%@ page import="com.tugas.perpus.model.Member" %>
+<%@ page import="com.tugas.perpus.model.User" %>
 <%
   request.setAttribute("title", "Member");
   MemberController memberController = (MemberController) session.getAttribute("memberController");
@@ -9,6 +10,12 @@
     session.setAttribute("memberController", memberController);
   }
   java.util.List<Member> members = memberController.getMembersFromDatabase();
+
+  User user = (User) session.getAttribute("user");
+  if (user != null && "member".equals(user.getRole())) {
+    response.sendRedirect(request.getContextPath() + "/index.jsp");
+    return;
+  }
 %>
 
 <!DOCTYPE html>

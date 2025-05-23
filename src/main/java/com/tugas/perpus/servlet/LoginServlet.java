@@ -46,7 +46,7 @@ public class LoginServlet extends HttpServlet {
                             );
                             HttpSession session = request.getSession();
                             session.setAttribute("user", user);
-                            response.sendRedirect("index.jsp");
+                            response.sendRedirect(request.getContextPath());
                             return;
                         } else {
                             request.setAttribute("error", "Password salah!");

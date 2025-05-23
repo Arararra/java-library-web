@@ -23,7 +23,7 @@ public class CategoryCreateServlet extends HttpServlet {
 
     if (name == null || name.trim().isEmpty()) {
       request.getSession().setAttribute("error", "Nama kategori tidak boleh kosong.");
-      response.sendRedirect(request.getContextPath() + "/category/create.jsp");
+      response.sendRedirect(request.getContextPath() + "/category/create");
       return;
     }
 
@@ -32,14 +32,14 @@ public class CategoryCreateServlet extends HttpServlet {
       String errorMessage = controller.createCategory(name);
       if (errorMessage == null) {
         request.getSession().setAttribute("successMessage", "Kategori berhasil ditambahkan.");
-        response.sendRedirect(request.getContextPath() + "/category/index.jsp");
+        response.sendRedirect(request.getContextPath() + "/category");
       } else {
         request.getSession().setAttribute("error", errorMessage);
-        response.sendRedirect(request.getContextPath() + "/category/create.jsp");
+        response.sendRedirect(request.getContextPath() + "/category/create");
       }
     } catch (Exception e) {
       request.getSession().setAttribute("error", "Terjadi kesalahan: " + e.getMessage());
-      response.sendRedirect(request.getContextPath() + "/category/create.jsp");
+      response.sendRedirect(request.getContextPath() + "/category/create");
     }
   }
 }

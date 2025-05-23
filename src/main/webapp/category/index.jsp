@@ -34,9 +34,11 @@
         <div class="container-fluid">
           <div class="d-flex justify-content-between align-items-center mb-4">
             <h1 class="h3 text-gray-800 mb-0">Daftar Kategori</h1>
+            <% if (!isMember) { %>
             <a href="<%= request.getContextPath() %>/category/create" class="btn btn-primary">
               <i class="fas fa-plus mr-1"></i> Tambah Kategori
             </a>
+            <% } %>
           </div>
 
           <%
@@ -71,7 +73,7 @@
                   </thead>
                   <tbody>
                     <% for (Category category : categories) { %>
-                      <tr<% if (!isMember) { %> style="cursor:pointer" onclick="window.location='<%= request.getContextPath() %>/book/edit/<%= book.getId() %>'"<% } %>>
+                      <tr<% if (!isMember) { %> style="cursor:pointer" onclick="window.location='<%= request.getContextPath() %>/category/edit/<%= category.getId() %>'"<% } %>>
                         <td><%= category.getId() %></td>
                         <td><%= category.getName() %></td>
                       </tr>

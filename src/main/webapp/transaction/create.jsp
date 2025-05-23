@@ -1,11 +1,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.tugas.perpus.model.Book" %>
 <%@ page import="com.tugas.perpus.model.Member" %>
+<%@ page import="com.tugas.perpus.model.User" %>
 <%
   request.setAttribute("title", "Tambah Transaksi");
   java.util.List<Book> books = (java.util.List<Book>) request.getAttribute("books");
   java.util.List<Member> members = (java.util.List<Member>) request.getAttribute("members");
   String error = (String) request.getAttribute("error");
+
+  User user = (User) session.getAttribute("user");
+  if (user != null && "member".equals(user.getRole())) {
+    response.sendRedirect(request.getContextPath() + "/index.jsp");
+    return;
+  }
 %>
 
 <!DOCTYPE html>

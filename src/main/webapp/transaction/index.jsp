@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.tugas.perpus.controller.TransactionController" %>
 <%@ page import="com.tugas.perpus.model.Transaction" %>
+<%@ page import="com.tugas.perpus.model.User" %>
 <%
   request.setAttribute("title", "Transaksi");
   TransactionController transactionController = (TransactionController) session.getAttribute("transactionController");
@@ -8,7 +9,9 @@
     transactionController = new TransactionController();
     session.setAttribute("transactionController", transactionController);
   }
-  java.util.List<Transaction> transactions = transactionController.getTransactionsFromDatabase();
+  User user = (User) session.getAttribute("user");
+  boolean isMember = user != null && "member".equals(user.getRole());
+  java.util.List<Transaction> transactions = transactionController.getTransactionsFromDatabase(user);
 %>
 
 <!DOCTYPE html>
@@ -28,9 +31,11 @@
         <div class="container-fluid">
           <div class="d-flex justify-content-between align-items-center mb-4">
             <h1 class="h3 mb-2 text-gray-800 mb-0">Daftar Transaksi</h1>
+            <% if (!isMember) { %>
             <a href="<%= request.getContextPath() %>/transaction/create" class="btn btn-primary">
               <i class="fas fa-plus mr-1"></i> Tambah Transaksi
             </a>
+            <% } %>
           </div>
 
           <% 
@@ -66,7 +71,9 @@
                       <th scope="col">Jatuh Tempo</th>
                       <th scope="col">Tanggal Kembali</th>
                       <th scope="col">Status</th>
+                      <% if (!isMember) { %>
                       <th scope="col">Aksi</th>
+                      <% } %>
                     </tr>
                   </thead>
                   <tbody>
@@ -79,6 +86,7 @@
                         <td><%= trx.getDueDate() != null ? trx.getDueDate() : "-" %></td>
                         <td><%= trx.getReturnDate() != null ? trx.getReturnDate() : "-" %></td>
                         <td><%= trx.getStatusDescription() %></td>
+                        <% if (!isMember) { %>
                         <td style="min-width:120px;">
                           <form method="post" action="<%= request.getContextPath() %>/transaction/finish/<%= trx.getId() %>" style="display:inline;" onsubmit="return confirm('Yakin ingin menyelesaikan transaksi ini?');">
                             <button type="submit" class="btn btn-success btn-sm" <%= trx.getReturnDate() != null ? "disabled" : "" %>>Selesaikan</button>
@@ -87,6 +95,7 @@
                             <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
                           </form>
                         </td>
+                        <% } %>
                       </tr>
                     <% } %>
                   </tbody>

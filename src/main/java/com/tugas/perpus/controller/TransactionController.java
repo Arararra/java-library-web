@@ -16,7 +16,7 @@ import java.util.List;
 import java.time.LocalDate;
 
 public class TransactionController {
-    public List<Transaction> getTransactionsFromDatabase() {
+    public List<Transaction> getTransactionsFromDatabase(User user) {
         List<Transaction> transactions = new ArrayList<>();
         Connection connection = DatabaseConnection.getConnection();
 
@@ -25,27 +25,33 @@ public class TransactionController {
                            "FROM transactions t " +
                            "JOIN users u ON t.user_id = u.id " +
                            "JOIN books b ON t.book_id = b.id";
-            try (PreparedStatement statement = connection.prepareStatement(query);
-                 ResultSet resultSet = statement.executeQuery()) {
+            if (user != null && "member".equals(user.getRole())) {
+                query += " WHERE t.user_id = ?";
+            }
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                if (user != null && "member".equals(user.getRole())) {
+                    statement.setInt(1, user.getId());
+                }
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        int id = resultSet.getInt("id");
+                        int userId = resultSet.getInt("user_id");
+                        String userName = resultSet.getString("user_name");
+                        int bookId = resultSet.getInt("book_id");
+                        String bookTitle = resultSet.getString("book_title");
+                        Date borrowDate = resultSet.getDate("borrow_date");
+                        Date dueDate = resultSet.getDate("due_date");
+                        Date returnDate = resultSet.getDate("return_date");
 
-                while (resultSet.next()) {
-                    int id = resultSet.getInt("id");
-                    int userId = resultSet.getInt("user_id");
-                    String userName = resultSet.getString("user_name");
-                    int bookId = resultSet.getInt("book_id");
-                    String bookTitle = resultSet.getString("book_title");
-                    Date borrowDate = resultSet.getDate("borrow_date");
-                    Date dueDate = resultSet.getDate("due_date");
-                    Date returnDate = resultSet.getDate("return_date");
-
-                    Book book = new Book(bookId, bookTitle, null, 0, null, null);
-                    User user = new Member(userId, userName, null, null, null);
-                    LocalDate borrowLocal = borrowDate != null ? borrowDate.toLocalDate() : null;
-                    LocalDate dueLocal = dueDate != null ? dueDate.toLocalDate() : null;
-                    LocalDate returnLocal = returnDate != null ? returnDate.toLocalDate() : null;
-                    Transaction trx = new Transaction(id, user, book, borrowLocal, dueLocal);
-                    trx.setReturnDate(returnLocal);
-                    transactions.add(trx);
+                        Book book = new Book(bookId, bookTitle, null, 0, null, null);
+                        User trxUser = new Member(userId, userName, null, null, null);
+                        LocalDate borrowLocal = borrowDate != null ? borrowDate.toLocalDate() : null;
+                        LocalDate dueLocal = dueDate != null ? dueDate.toLocalDate() : null;
+                        LocalDate returnLocal = returnDate != null ? returnDate.toLocalDate() : null;
+                        Transaction trx = new Transaction(id, trxUser, book, borrowLocal, dueLocal);
+                        trx.setReturnDate(returnLocal);
+                        transactions.add(trx);
+                    }
                 }
             } catch (SQLException e) {
                 e.printStackTrace();

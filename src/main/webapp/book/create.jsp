@@ -1,9 +1,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %> 
 <%@ page import="com.tugas.perpus.model.Category" %> 
+<%@ page import="com.tugas.perpus.model.User" %>
 <%
   request.setAttribute("title", "Tambah Buku");
   java.util.List<Category> categories = (java.util.List<Category>) request.getAttribute("categories");
   String error = (String) request.getAttribute("error");
+
+  User user = (User) session.getAttribute("user");
+  if (user != null && "member".equals(user.getRole())) {
+    response.sendRedirect(request.getContextPath() + "/index.jsp");
+    return;
+  }
 %>
 <!DOCTYPE html>
 <html>

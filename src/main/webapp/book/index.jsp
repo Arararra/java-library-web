@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.tugas.perpus.controller.BookController" %>
 <%@ page import="com.tugas.perpus.model.Book" %>
+<%@ page import="com.tugas.perpus.model.User" %>
 
 <%
   request.setAttribute("title", "Book");
@@ -12,6 +13,8 @@
   }
 
   java.util.List<Book> books = bookController.getBooksFromDatabase();
+  User user = (User) session.getAttribute("user");
+  boolean isMember = user != null && "member".equals(user.getRole());
 %>
 
 <!DOCTYPE html>
@@ -31,9 +34,11 @@
         <div class="container-fluid">
           <div class="d-flex justify-content-between align-items-center mb-4">
             <h1 class="h3 mb-2 text-gray-800 mb-0">Daftar Buku</h1>
-            <a href="<%= request.getContextPath() %>/buku/tambah" class="btn btn-primary">
+            <% if (!isMember) { %>
+            <a href="<%= request.getContextPath() %>/book/create" class="btn btn-primary">
               <i class="fas fa-plus mr-1"></i> Tambah Buku
             </a>
+            <% } %>
           </div>
 
           <% 
@@ -72,7 +77,7 @@
                   </thead>
                   <tbody>
                     <% for (Book book : books) { %>
-                      <tr style="cursor:pointer" onclick="window.location='<%= request.getContextPath() %>/book/edit/<%= book.getId() %>'">
+                      <tr<% if (!isMember) { %> style="cursor:pointer" onclick="window.location='<%= request.getContextPath() %>/book/edit/<%= book.getId() %>'"<% } %>>
                         <td><%= book.getId() %></td>
                         <td><%= book.getTitle() %></td>
                         <td><%= book.getCategory().getName() %></td>

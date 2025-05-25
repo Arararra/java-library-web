@@ -1,12 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.tugas.perpus.model.User" %>
-<% String currentPath = request.getRequestURI().substring(request.getContextPath().length()); %>
 <%
+  String currentPath = request.getRequestURI().substring(request.getContextPath().length());
   User user = (User) session.getAttribute("user");
   boolean isMember = user != null && "member".equals(user.getRole());
 %>
+
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-  <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.jsp">
+  <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<%= request.getContextPath() %>">
     <div class="sidebar-brand-icon rotate-n-15">
       <i class="fas fa-book"></i>
     </div>
@@ -15,7 +16,7 @@
 
   <hr class="sidebar-divider my-0">
 
-  <li class="nav-item <%= currentPath == null ? "active" : "" %>">
+  <li class="nav-item <%= currentPath.equals("/") ? "active" : "" %>">
     <a class="nav-link" href="<%= request.getContextPath() %>">
       <i class="fas fa-fw fa-tachometer-alt"></i>
       <span>Dashboard</span>

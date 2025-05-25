@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.tugas.perpus.controller;
 
 import com.tugas.perpus.util.DatabaseConnection;
@@ -14,10 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author LENOVO
- */
 public class CategoryController {
   public List<Category> getCategoriesFromDatabase() {
     List<Category> categories = new ArrayList<>();
@@ -25,9 +17,9 @@ public class CategoryController {
 
     if (connection != null) {
       String query = "SELECT id, name FROM categories";
+
       try (PreparedStatement statement = connection.prepareStatement(query);
            ResultSet resultSet = statement.executeQuery()) {
-
         while (resultSet.next()) {
           int id = resultSet.getInt("id");
           String name = resultSet.getString("name");
@@ -46,6 +38,7 @@ public class CategoryController {
 
     if (connection != null) {
       String sql = "INSERT INTO categories (name) VALUES (?)";
+
       try (PreparedStatement stmt = connection.prepareStatement(sql)) {
         stmt.setString(1, name);
         stmt.executeUpdate();
@@ -63,8 +56,10 @@ public class CategoryController {
 
     if (connection != null) {
       String query = "SELECT id, name FROM categories WHERE id = ?";
+
       try (PreparedStatement statement = connection.prepareStatement(query)) {
         statement.setInt(1, id);
+
         try (ResultSet resultSet = statement.executeQuery()) {
           if (resultSet.next()) {
             String name = resultSet.getString("name");
@@ -84,6 +79,7 @@ public class CategoryController {
 
     if (connection != null) {
       String query = "UPDATE categories SET name = ? WHERE id = ?";
+      
       try (PreparedStatement statement = connection.prepareStatement(query)) {
         statement.setString(1, name);
         statement.setInt(2, id);

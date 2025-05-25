@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.tugas.perpus.controller;
 
 import com.tugas.perpus.util.DatabaseConnection;
@@ -15,10 +11,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author LENOVO
- */
 public class BookController {
   public List<Book> getBooksFromDatabase() {
     List<Book> books = new ArrayList<>();
@@ -28,9 +20,9 @@ public class BookController {
       String query = "SELECT b.id, b.title, b.stock, b.author, b.publisher, c.id AS category_id, c.name AS category_name " +
                      "FROM books b " +
                      "JOIN categories c ON b.category_id = c.id";
+
       try (PreparedStatement statement = connection.prepareStatement(query);
            ResultSet resultSet = statement.executeQuery()) {
-
         while (resultSet.next()) {
           int id = resultSet.getInt("id");
           String title = resultSet.getString("title");
@@ -53,8 +45,10 @@ public class BookController {
 
   public String insertBook(String title, int categoryId, int stock, String author, String publisher) {
     Connection connection = DatabaseConnection.getConnection();
+
     if (connection != null) {
       String query = "INSERT INTO books (title, category_id, stock, author, publisher) VALUES (?, ?, ?, ?, ?)";
+
       try (PreparedStatement statement = connection.prepareStatement(query)) {
         statement.setString(1, title);
         statement.setInt(2, categoryId);
@@ -73,8 +67,10 @@ public class BookController {
 
   public String updateBook(int id, String title, int categoryId, int stock, String author, String publisher) {
     Connection connection = DatabaseConnection.getConnection();
+
     if (connection != null) {
       String query = "UPDATE books SET title=?, category_id=?, stock=?, author=?, publisher=? WHERE id=?";
+
       try (PreparedStatement statement = connection.prepareStatement(query)) {
         statement.setString(1, title);
         statement.setInt(2, categoryId);
@@ -83,6 +79,7 @@ public class BookController {
         statement.setString(5, publisher);
         statement.setInt(6, id);
         int rows = statement.executeUpdate();
+
         if (rows > 0) {
           return null;
         } else {
@@ -98,10 +95,13 @@ public class BookController {
 
   public Book getBookById(int id) {
     Connection connection = DatabaseConnection.getConnection();
+
     if (connection != null) {
       String query = "SELECT b.id, b.title, b.stock, b.author, b.publisher, c.id AS category_id, c.name AS category_name FROM books b JOIN categories c ON b.category_id = c.id WHERE b.id = ?";
+      
       try (PreparedStatement statement = connection.prepareStatement(query)) {
         statement.setInt(1, id);
+
         try (ResultSet resultSet = statement.executeQuery()) {
           if (resultSet.next()) {
             String title = resultSet.getString("title");
@@ -123,11 +123,14 @@ public class BookController {
 
   public String deleteBook(int id) {
     Connection connection = DatabaseConnection.getConnection();
+
     if (connection != null) {
       String query = "DELETE FROM books WHERE id = ?";
+
       try (PreparedStatement statement = connection.prepareStatement(query)) {
         statement.setInt(1, id);
         int rows = statement.executeUpdate();
+
         if (rows > 0) {
           return null;
         } else {
@@ -144,11 +147,13 @@ public class BookController {
   public List<Book> getAvailableBooks() {
     List<Book> books = new ArrayList<>();
     Connection connection = DatabaseConnection.getConnection();
+
     if (connection != null) {
       String query = "SELECT b.id, b.title, b.stock, b.author, b.publisher, c.id AS category_id, c.name AS category_name " +
                      "FROM books b " +
                      "JOIN categories c ON b.category_id = c.id " +
                      "WHERE b.stock > 0";
+
       try (PreparedStatement statement = connection.prepareStatement(query);
            ResultSet resultSet = statement.executeQuery()) {
         while (resultSet.next()) {
@@ -171,11 +176,14 @@ public class BookController {
 
   public String decrementBookStock(int bookId) {
     Connection connection = DatabaseConnection.getConnection();
+
     if (connection != null) {
       String query = "UPDATE books SET stock = stock - 1 WHERE id = ? AND stock > 0";
+
       try (PreparedStatement statement = connection.prepareStatement(query)) {
         statement.setInt(1, bookId);
         int rows = statement.executeUpdate();
+        
         if (rows > 0) {
           return null; // success
         } else {

@@ -13,6 +13,7 @@ public class MemberController {
   public List<Member> getMembersFromDatabase() {
     List<Member> members = new ArrayList<>();
     Connection connection = DatabaseConnection.getConnection();
+
     if (connection != null) {
       String query = "SELECT id, name, email, phone, address, role FROM users WHERE role = 'member'";
       try (PreparedStatement statement = connection.prepareStatement(query);
@@ -37,6 +38,7 @@ public class MemberController {
 
   public String insertMember(String name, String email, String address, String phone, String role) {
     Connection connection = DatabaseConnection.getConnection();
+
     if (connection != null) {
       // Cek email dan telepon unik
       String checkQuery = "SELECT COUNT(*) FROM users WHERE email = ? OR phone = ?";
@@ -51,6 +53,7 @@ public class MemberController {
       } catch (SQLException e) {
         return "Error saat validasi email/telepon: " + e.getMessage();
       }
+
       // Insert jika unik
       String query = "INSERT INTO users (name, email, address, phone, role) VALUES (?, ?, ?, ?, ?)";
       try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -71,6 +74,7 @@ public class MemberController {
 
   public Member getMemberById(int id) {
     Connection connection = DatabaseConnection.getConnection();
+
     if (connection != null) {
       String query = "SELECT id, name, email, phone, address, role FROM users WHERE id = ? AND role = 'member'";
       try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -96,6 +100,7 @@ public class MemberController {
 
   public String updateMember(int id, String name, String email, String address, String phone, String role) {
     Connection connection = DatabaseConnection.getConnection();
+
     if (connection != null) {
       // Validasi email dan telepon unik, kecuali untuk user ini sendiri
       String checkQuery = "SELECT COUNT(*) FROM users WHERE (email = ? OR phone = ?) AND id <> ?";
@@ -111,6 +116,7 @@ public class MemberController {
       } catch (SQLException e) {
         return "Error saat validasi email/telepon: " + e.getMessage();
       }
+
       // Update jika unik
       String query = "UPDATE users SET name=?, email=?, address=?, phone=?, role=? WHERE id=? AND role = 'member'";
       try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -121,6 +127,7 @@ public class MemberController {
         statement.setString(5, role);
         statement.setInt(6, id);
         int rows = statement.executeUpdate();
+
         if (rows > 0) {
           return null;
         } else {
@@ -136,11 +143,13 @@ public class MemberController {
 
   public String deleteMember(int id) {
     Connection connection = DatabaseConnection.getConnection();
+
     if (connection != null) {
       String query = "DELETE FROM users WHERE id = ? AND role = 'member'";
       try (PreparedStatement statement = connection.prepareStatement(query)) {
         statement.setInt(1, id);
         int rows = statement.executeUpdate();
+
         if (rows > 0) {
           return null;
         } else {
@@ -157,9 +166,9 @@ public class MemberController {
   public List<Member> getEligibleMembersForBorrow() {
     List<Member> members = new ArrayList<>();
     Connection connection = DatabaseConnection.getConnection();
+    
     if (connection != null) {
-      String query =
-        "SELECT u.id, u.name, u.email, u.phone, u.address, u.role " +
+      String query = "SELECT u.id, u.name, u.email, u.phone, u.address, u.role " +
         "FROM users u " +
         "WHERE u.role = 'member' AND (" +
         // Tidak ada transaksi sama sekali

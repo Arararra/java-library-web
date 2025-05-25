@@ -2,7 +2,6 @@
 <%@ page import="com.tugas.perpus.controller.BookController" %>
 <%@ page import="com.tugas.perpus.model.Book" %>
 <%@ page import="com.tugas.perpus.model.User" %>
-
 <%
   request.setAttribute("title", "Book");
 
@@ -35,9 +34,9 @@
           <div class="d-flex justify-content-between align-items-center mb-4">
             <h1 class="h3 mb-2 text-gray-800 mb-0">Daftar Buku</h1>
             <% if (!isMember) { %>
-            <a href="<%= request.getContextPath() %>/book/create" class="btn btn-primary">
-              <i class="fas fa-plus mr-1"></i> Tambah Buku
-            </a>
+              <a href="<%= request.getContextPath() %>/book/create" class="btn btn-primary">
+                <i class="fas fa-plus mr-1"></i> Tambah Buku
+              </a>
             <% } %>
           </div>
 

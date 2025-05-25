@@ -4,11 +4,13 @@
 <%@ page import="com.tugas.perpus.model.User" %>
 <%
   request.setAttribute("title", "Transaksi");
+
   TransactionController transactionController = (TransactionController) session.getAttribute("transactionController");
   if (transactionController == null) {
     transactionController = new TransactionController();
     session.setAttribute("transactionController", transactionController);
   }
+  
   User user = (User) session.getAttribute("user");
   boolean isMember = user != null && "member".equals(user.getRole());
   java.util.List<Transaction> transactions = transactionController.getTransactionsFromDatabase(user);
@@ -32,9 +34,9 @@
           <div class="d-flex justify-content-between align-items-center mb-4">
             <h1 class="h3 mb-2 text-gray-800 mb-0">Daftar Transaksi</h1>
             <% if (!isMember) { %>
-            <a href="<%= request.getContextPath() %>/transaction/create" class="btn btn-primary">
-              <i class="fas fa-plus mr-1"></i> Tambah Transaksi
-            </a>
+              <a href="<%= request.getContextPath() %>/transaction/create" class="btn btn-primary">
+                <i class="fas fa-plus mr-1"></i> Tambah Transaksi
+              </a>
             <% } %>
           </div>
 

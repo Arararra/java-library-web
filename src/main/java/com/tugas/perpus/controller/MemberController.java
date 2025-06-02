@@ -54,14 +54,19 @@ public class MemberController {
         return "Error saat validasi email/telepon: " + e.getMessage();
       }
 
+      // Hash password default
+      String defaultPassword = "dummypass";
+      String hashedPassword = com.tugas.perpus.util.PasswordHelper.hashPassword(defaultPassword);
+
       // Insert jika unik
-      String query = "INSERT INTO users (name, email, address, phone, role) VALUES (?, ?, ?, ?, ?)";
+      String query = "INSERT INTO users (name, email, address, phone, role, password) VALUES (?, ?, ?, ?, ?, ?)";
       try (PreparedStatement statement = connection.prepareStatement(query)) {
         statement.setString(1, name);
         statement.setString(2, email);
         statement.setString(3, address);
         statement.setString(4, phone);
         statement.setString(5, role);
+        statement.setString(6, hashedPassword);
         statement.executeUpdate();
         return null;
       } catch (SQLException e) {

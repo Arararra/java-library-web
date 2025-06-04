@@ -21,17 +21,16 @@
   }
 %>
 
-<canvas id="trxBarChart" style="width:100%; height:300px;"></canvas>
+<canvas id="trxBarChart" class="w-100 h-100"></canvas>
 <script src="<%= request.getContextPath() %>/_themes/vendor/chart.js/Chart.min.js"></script>
 <script>
   const ctx = document.getElementById('trxBarChart').getContext('2d');
-
   new Chart(ctx, {
     type: 'bar',
     data: {
       labels: ['Dipinjam', 'Selesai', 'Terlambat'],
       datasets: [{
-        label: 'My First Dataset',
+        label: 'Statistik Peminjaman',
         data: [<%= dipinjam %>, <%= selesai %>, <%= terlambat %>],
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
@@ -47,20 +46,12 @@
       }]
     },
     options: {
-      responsive: true,
       scales: {
-        y: {
-          beginAtZero: true,
+        yAxes: [{
           ticks: {
-            precision: 0,
-            stepSize: 1
+            beginAtZero: true
           }
-        }
-      },
-      plugins: {
-        legend: {
-          position: 'top'
-        }
+        }]
       }
     }
   });

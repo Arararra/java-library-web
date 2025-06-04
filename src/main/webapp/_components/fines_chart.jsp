@@ -20,11 +20,11 @@
   }
 %>
 
-<canvas id="finesPieChart" width="400" height="200"></canvas>
+<canvas id="finesPieChart" class="w-100 h-100"></canvas>
 <script src="<%= request.getContextPath() %>/_themes/vendor/chart.js/Chart.min.js"></script>
 <script>
-  const ctx = document.getElementById('finesPieChart').getContext('2d');
-  new Chart(ctx, {
+  const pieCtx = document.getElementById('finesPieChart').getContext('2d');
+  new Chart(pieCtx, {
     type: 'pie',
     data: {
       labels: ['Selesai', 'Belum Selesai'],
@@ -32,8 +32,8 @@
         label: 'Jumlah Denda',
         data: [<%= selesai %>, <%= belum %>],
         backgroundColor: [
-          'rgba(75, 192, 192, 0.7)',   // Hijau - Selesai
-          'rgba(255, 99, 132, 0.7)'    // Merah - Belum
+          'rgba(75, 192, 192, 0.7)',
+          'rgba(255, 99, 132, 0.7)'
         ],
         borderColor: [
           'rgba(75, 192, 192, 1)',

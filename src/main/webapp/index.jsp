@@ -103,7 +103,7 @@
           </div>
 
           <div class="row">
-            <div class="col-12">
+            <div class="col-lg-8">
               <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Chart Peminjaman</h6>
@@ -116,7 +116,7 @@
               </div>
             </div>
             
-            <!-- <div class="col-xl-4 col-lg-5">
+            <div class="col-lg-4">
               <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Chart Denda</h6>
@@ -127,7 +127,7 @@
                   </div>
                 </div>
               </div>
-            </div> -->
+            </div>
           </div>
         </div>
       </div>

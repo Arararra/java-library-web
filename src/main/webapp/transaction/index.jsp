@@ -3,7 +3,7 @@
 <%@ page import="com.tugas.perpus.model.Transaction" %>
 <%@ page import="com.tugas.perpus.model.User" %>
 <%
-  request.setAttribute("title", "Transaksi");
+  request.setAttribute("title", "peminjaman");
 
   TransactionController transactionController = (TransactionController) session.getAttribute("transactionController");
   if (transactionController == null) {
@@ -32,10 +32,10 @@
 
         <div class="container-fluid">
           <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="h3 mb-2 text-gray-800 mb-0">Daftar Transaksi</h1>
+            <h1 class="h3 mb-2 text-gray-800 mb-0">Daftar Peminjaman</h1>
             <% if (!isMember) { %>
               <a href="<%= request.getContextPath() %>/transaction/create" class="btn btn-primary">
-                <i class="fas fa-plus mr-1"></i> Tambah Transaksi
+                <i class="fas fa-plus mr-1"></i> Tambah Peminjaman
               </a>
             <% } %>
           </div>
@@ -90,10 +90,10 @@
                         <td><%= trx.getStatusDescription() %></td>
                         <% if (!isMember) { %>
                         <td style="min-width:120px;">
-                          <form method="post" action="<%= request.getContextPath() %>/transaction/finish/<%= trx.getId() %>" style="display:inline;" onsubmit="return confirm('Yakin ingin menyelesaikan transaksi ini?');">
+                          <form method="post" action="<%= request.getContextPath() %>/transaction/finish/<%= trx.getId() %>" style="display:inline;" onsubmit="return confirm('Yakin ingin menyelesaikan peminjaman ini?');">
                             <button type="submit" class="btn btn-success btn-sm" <%= trx.getReturnDate() != null ? "disabled" : "" %>>Selesaikan</button>
                           </form>
-                          <form method="post" action="<%= request.getContextPath() %>/transaction/delete/<%= trx.getId() %>" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus transaksi ini?');">
+                          <form method="post" action="<%= request.getContextPath() %>/transaction/delete/<%= trx.getId() %>" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus peminjaman ini?');">
                             <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
                           </form>
                         </td>

@@ -208,4 +208,76 @@ public class TransactionController {
       return "Koneksi ke database gagal.";
     }
   }
+
+  // Ambil transaksi dengan pagination
+  public List<Transaction> getTransactionsByPage(User user, int page, int pageSize) {
+    List<Transaction> transactions = new ArrayList<>();
+    Connection connection = DatabaseConnection.getConnection();
+    if (connection != null) {
+      String query = "SELECT t.id, u.id as user_id, u.name as user_name, b.id as book_id, b.title as book_title, t.borrow_date, t.due_date, t.return_date " +
+        "FROM transactions t " +
+        "JOIN users u ON t.user_id = u.id " +
+        "JOIN books b ON t.book_id = b.id";
+      if (user != null && "member".equals(user.getRole())) {
+        query += " WHERE t.user_id = ?";
+      }
+      query += " ORDER BY t.id DESC LIMIT ? OFFSET ?";
+      try (PreparedStatement statement = connection.prepareStatement(query)) {
+        int paramIdx = 1;
+        if (user != null && "member".equals(user.getRole())) {
+          statement.setInt(paramIdx++, user.getId());
+        }
+        statement.setInt(paramIdx++, pageSize);
+        statement.setInt(paramIdx, (page - 1) * pageSize);
+        try (ResultSet resultSet = statement.executeQuery()) {
+          while (resultSet.next()) {
+            int id = resultSet.getInt("id");
+            int userId = resultSet.getInt("user_id");
+            String userName = resultSet.getString("user_name");
+            int bookId = resultSet.getInt("book_id");
+            String bookTitle = resultSet.getString("book_title");
+            Date borrowDate = resultSet.getDate("borrow_date");
+            Date dueDate = resultSet.getDate("due_date");
+            Date returnDate = resultSet.getDate("return_date");
+            Book book = new Book(bookId, bookTitle, null, 0, null, null);
+            User trxUser = new Member(userId, userName, null, null, null);
+            LocalDate borrowLocal = borrowDate != null ? borrowDate.toLocalDate() : null;
+            LocalDate dueLocal = dueDate != null ? dueDate.toLocalDate() : null;
+            LocalDate returnLocal = returnDate != null ? returnDate.toLocalDate() : null;
+            Transaction trx = new Transaction(id, trxUser, book, borrowLocal, dueLocal);
+            trx.setReturnDate(returnLocal);
+            transactions.add(trx);
+          }
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    }
+    return transactions;
+  }
+
+  // Hitung total transaksi (untuk pagination)
+  public int getTotalTransactionCount(User user) {
+    Connection connection = DatabaseConnection.getConnection();
+    int count = 0;
+    if (connection != null) {
+      String query = "SELECT COUNT(*) FROM transactions";
+      if (user != null && "member".equals(user.getRole())) {
+        query += " WHERE user_id = ?";
+      }
+      try (PreparedStatement statement = connection.prepareStatement(query)) {
+        if (user != null && "member".equals(user.getRole())) {
+          statement.setInt(1, user.getId());
+        }
+        try (ResultSet rs = statement.executeQuery()) {
+          if (rs.next()) {
+            count = rs.getInt(1);
+          }
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    }
+    return count;
+  }
 }

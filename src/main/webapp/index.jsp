@@ -8,30 +8,6 @@
 
   // Ambil user dari session
   User user = (User) session.getAttribute("user");
-  
-  // Total Member
-  MemberController memberController = (MemberController) session.getAttribute("memberController");
-  if (memberController == null) {
-    memberController = new MemberController();
-    session.setAttribute("memberController", memberController);
-  }
-  int totalMember = memberController.getMembersFromDatabase().size();
-
-  // Total Transaksi
-  TransactionController transactionController = (TransactionController) session.getAttribute("transactionController");
-  if (transactionController == null) {
-    transactionController = new TransactionController();
-    session.setAttribute("transactionController", transactionController);
-  }
-  int totalTransaksi = transactionController.getTransactionsFromDatabase(null).size();
-  
-  // Total Denda
-  FineController fineController = (FineController) session.getAttribute("fineController");
-  if (fineController == null) {
-    fineController = new FineController();
-    session.setAttribute("fineController", fineController);
-  }
-  int totalDenda = fineController.getFinesFromDatabase(null).size();
 %>
 
 <!DOCTYPE html>
@@ -96,34 +72,6 @@
                     <div class="col-auto">
                       <i class="fas fa-money-bill-wave fa-2x text-gray-300"></i>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-lg-8">
-              <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Chart Peminjaman</h6>
-                </div>
-                <div class="card-body">
-                  <div class="chart-area">
-                    <jsp:include page="/_components/transaction_chart.jsp" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div class="col-lg-4">
-              <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Chart Denda</h6>
-                </div>
-                <div class="card-body">
-                  <div class="chart-area">
-                    <jsp:include page="/_components/fines_chart.jsp" />
                   </div>
                 </div>
               </div>

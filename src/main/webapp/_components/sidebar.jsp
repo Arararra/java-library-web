@@ -31,7 +31,7 @@
       <span>Peminjaman</span>
     </a>
   </li>
-  <li class="nav-item <%= currentPath.startsWith("/transaction-page?page=1") ? "active" : "" %>">
+  <li class="nav-item <%= currentPath.startsWith("/transaction-page") ? "active" : "" %>">
     <a class="nav-link" href="<%= request.getContextPath() %>/transaction-page?page=1">
       <i class="fas fa-fw fa-boxes"></i>
       <span>Peminjaman Pagination</span>
